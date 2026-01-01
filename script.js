@@ -1,5 +1,8 @@
-const button = document.querySelector("button");
+const startBtn = document.getElementById("startBtn");
+const home = document.getElementById("home");
+const auth = document.getElementById("auth");
 
-button.addEventListener("click", () => {
-  alert("서비스 준비 중입니다 🙂");
+startBtn.addEventListener("click", () => {
+  home.style.display = "none";
+  auth.style.display = "block";
 });
