@@ -7,10 +7,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>같은 고객 질문,<br>이제 자동으로 답하세요</h1>
-  <p>배송·환불·영업시간 문의를 자동으로 처리해드립니다.</p>
 
-  <button>무료로 시작하기</button>
+  <!-- 첫 화면 -->
+  <div id="home">
+    <h1>같은 고객 질문,<br>이제 자동으로 답하세요</h1>
+    <p>배송·환불·영업시간 문의를 자동으로 처리합니다.</p>
+    <button id="startBtn">무료로 시작하기</button>
+  </div>
+
+  <!-- 설명 + 로그인 화면 (처음엔 숨김) -->
+  <div id="auth" style="display: none;">
+    <h2>이 서비스는 뭐냐면</h2>
+    <p>
+      자주 반복되는 고객 질문을 자동으로 응답해주는 서비스입니다.<br>
+      카톡, 인스타, 쇼핑몰 문의를 줄여줍니다.
+    </p>
+
+    <button>회원가입</button>
+    <button>로그인</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
