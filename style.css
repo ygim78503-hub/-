@@ -5,96 +5,123 @@
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f6f9ff, #eaf0ff);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #222;
+  margin:0;
+  min-height:100vh;
+  background: #f5f7fa;
+  transition: background 0.3s;
 }
 
-/* 카드 공통 */
+/* 공통 카드 스타일 */
 #home, #auth, #signupPage, #loginPage {
-  width: 100%;
   max-width: 420px;
-  background: #ffffff;
-  padding: 40px 32px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  text-align:center;
+  transition: all 0.3s ease-in-out;
 }
 
-/* 제목 */
-h1 {
-  font-size: 28px;
-  margin-bottom: 12px;
-}
-
-h2 {
-  font-size: 22px;
-  margin-bottom: 12px;
-}
-
-/* 설명 텍스트 */
-p {
-  font-size: 15px;
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-/* 버튼 */
+h1, h2 { margin-bottom:15px; }
+p { color:#555; margin-bottom:20px; line-height:1.5; }
 button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #4f46e5;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:#4f46e5;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
 }
-
-button:hover {
-  background: #4338ca;
-  transform: translateY(-1px);
-}
-
-/* 입력창 */
-input {
-  width: 100%;
-  padding: 14px;
-  margin-top: 8px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 15px;
-}
-
-input:focus {
-  outline: none;
-  border-color: #4f46e5;
-}
+button:hover { background:#4338ca; }
 
 /* 링크 버튼 */
 .link-btn {
-  background: none;
-  color: #4f46e5;
-  font-size: 14px;
-  margin-top: 16px;
+  background:none;
+  color:#4f46e5;
+  margin-top:10px;
 }
+.link-btn:hover { text-decoration:underline; }
 
-.link-btn:hover {
-  background: none;
-  text-decoration: underline;
+/* 입력창 */
+input {
+  width:100%;
+  padding:12px;
+  margin:5px 0;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:15px;
+  transition: border 0.2s;
 }
+input:focus { border-color:#4f46e5; outline:none; }
 
-/* 작은 안내 문구 */
-.small {
-  font-size: 13px;
-  color: #888;
-  margin-top: 10px;
+/* ===================
+   대시보드
+=================== */
+#dashboard { display:flex; flex-direction:column; min-height:100vh; }
+
+/* 상단 헤더 */
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:#4f46e5;
+  color:#fff;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
 }
+header .service-name { font-weight:700; font-size:18px; }
+
+/* 사이드바 */
+#sidebar {
+  position:fixed;
+  left:-250px;
+  top:0;
+  width:250px;
+  height:100%;
+  background:#fff;
+  box-shadow:2px 0 8px rgba(0,0,0,0.15);
+  transition: left 0.3s ease;
+  padding:20px;
+  z-index:999;
+}
+#sidebar ul { list-style:none; padding:0; }
+#sidebar li { padding:12px 0; cursor:pointer; border-bottom:1px solid #eee; }
+#sidebar li:hover { background:#f0f0f0; }
+
+/* main */
+main { flex:1; padding:20px; margin-top:60px; transition: margin-left 0.3s ease; }
+
+/* main shift when sidebar open */
+#dashboard.sidebar-open main { margin-left:250px; }
+
+/* footer */
+footer {
+  padding:10px 20px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#fff;
+  box-shadow:0 -2px 8px rgba(0,0,0,0.05);
+}
+.social-btn {
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#4f46e5;
+  color:#fff;
+  cursor:pointer;
+  transition:0.2s;
+}
+.social-btn:hover { background:#4338ca; }
