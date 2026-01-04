@@ -2,20 +2,21 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>반복 질문 자동 응답 | 고객 문의 자동화</title>
-  <meta name="description" content="배송, 환불, 영업시간 등 반복되는 고객 질문을 자동으로 답변해주는 서비스">
+  <title>반복 질문 자동 응답</title>
+  <meta name="description" content="반복되는 고객 질문을 자동으로 응답해주는 서비스">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- 첫 화면 -->
+  <!-- 1. 홈 화면 -->
   <div id="home">
     <h1>같은 고객 질문,<br>이제 자동으로 답하세요</h1>
     <p>배송·환불·영업시간 문의를 자동으로 처리합니다.</p>
     <button id="startBtn">무료로 시작하기</button>
   </div>
 
-  <!-- 설명 + 로그인 화면 (처음엔 숨김) -->
+  <!-- 2. 회원가입 / 로그인 선택 화면 -->
   <div id="auth" style="display: none;">
     <h2>이 서비스는 뭐냐면</h2>
     <p>
@@ -23,22 +24,25 @@
       카톡, 인스타, 쇼핑몰 문의를 줄여줍니다.
     </p>
 
-    <button id="signup">회원가입</button>
+    <button id="signupBtn">회원가입</button>
+    <button id="loginBtn">로그인</button>
+  </div>
+
+  <!-- 3. 회원가입 화면 -->
+  <div id="signupPage" style="display: none;">
+    <h2>회원가입</h2>
+    <input type="email" placeholder="이메일"><br><br>
+    <input type="password" placeholder="비밀번호"><br><br>
+    <button>회원가입</button>
+  </div>
+
+  <!-- 4. 로그인 화면 -->
+  <div id="loginPage" style="display: none;">
+    <h2>로그인</h2>
+    <input type="email" placeholder="이메일"><br><br>
+    <input type="password" placeholder="비밀번호"><br><br>
     <button>로그인</button>
   </div>
-  
-  <!-- 회원가입 버튼 -->
-<button id="signupBtn">회원가입</button>
-
-<!-- 회원가입 화면 -->
-<div id="signupPage" style="display: none;">
-  <h2>회원가입</h2>
-
-  <input type="email" placeholder="이메일"><br><br>
-  <input type="password" placeholder="비밀번호"><br><br>
-
-  <button>가입하기</button>
-</div>
 
   <script src="script.js"></script>
 </body>
