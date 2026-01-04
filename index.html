@@ -31,35 +31,43 @@
   <!-- 3. 회원가입 화면 -->
   <div id="signupPage" style="display: none;">
     <h2>회원가입</h2>
-    <input id="signemail" type="email" placeholder="이메일"><br><br>
-    <input id="signuppassword" type="password" placeholder="비밀번호"><br><br>
-    <button id="signupsubmitBtn">회원가입</button>
+
+    <input id="signupEmail" type="email" placeholder="이메일"><br><br>
+    <input id="signupPassword" type="password" placeholder="비밀번호"><br><br>
+
+    <button id="signupSubmitBtn">회원가입</button>
   </div>
 
   <!-- 4. 로그인 화면 -->
   <div id="loginPage" style="display: none;">
     <h2>로그인</h2>
-    <input id="loginemail" type="email" placeholder="이메일"><br><br>
-    <input id="loginpassword" type="password" placeholder="비밀번호"><br><br>
-    <button id="loginsubmitBtn">로그인</button>
+
+    <input id="loginEmail" type="email" placeholder="이메일"><br><br>
+    <input id="loginPassword" type="password" placeholder="비밀번호"><br><br>
+
+    <button id="loginSubmitBtn">로그인</button>
   </div>
 
+  <!-- 화면 전환 로직 -->
   <script type="module" src="script.js"></script>
+
+  <!-- Firebase 초기화 -->
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "여기에_너_값",
-    authDomain: "여기에_너_값",
-    projectId: "여기에_너_값",
-    storageBucket: "여기에_너_값",
-    messagingSenderId: "여기에_너_값",
-    appId: "여기에_너_값"
-  };
+    const firebaseConfig = {
+      apiKey: "여기에_너_값",
+      authDomain: "여기에_너_값",
+      projectId: "여기에_너_값",
+      storageBucket: "여기에_너_값",
+      messagingSenderId: "여기에_너_값",
+      appId: "여기에_너_값"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  window.auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    window.auth = getAuth(app);
   </script>
+
 </body>
 </html>
