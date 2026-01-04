@@ -24,3 +24,7 @@ loginBtn.addEventListener("click", () => {
   auth.style.display = "none";
   loginPage.style.display = "block";
 });
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
