@@ -16,40 +16,44 @@
     <button id="startBtn">무료로 시작하기</button>
   </div>
 
-  <!-- 2. 회원가입 / 로그인 선택 화면 -->
-  <div id="auth" style="display: none;">
+  <!-- 2. 회원가입 / 로그인 선택 -->
+  <div id="auth" style="display:none;">
     <h2>이 서비스는 뭐냐면</h2>
     <p>
-      자주 반복되는 고객 질문을 자동으로 응답해주는 서비스입니다.<br>
-      카톡, 인스타, 쇼핑몰 문의를 줄여줍니다.
+      자주 반복되는 고객 질문을<br>
+      자동으로 응답해주는 서비스입니다.
     </p>
 
     <button id="signupBtn">회원가입</button>
     <button id="loginBtn">로그인</button>
   </div>
 
-  <!-- 3. 회원가입 화면 -->
-  <div id="signupPage" style="display: none;">
+  <!-- 3. 회원가입 -->
+  <div id="signupPage" style="display:none;">
     <h2>회원가입</h2>
 
     <input id="signupEmail" type="email" placeholder="이메일"><br><br>
     <input id="signupPassword" type="password" placeholder="비밀번호"><br><br>
 
     <button id="signupSubmitBtn">회원가입</button>
+    <br><br>
+
+    <button id="toLoginBtn">이미 계정이 있나요? 로그인</button>
   </div>
 
-  <!-- 4. 로그인 화면 -->
-  <div id="loginPage" style="display: none;">
+  <!-- 4. 로그인 -->
+  <div id="loginPage" style="display:none;">
     <h2>로그인</h2>
 
     <input id="loginEmail" type="email" placeholder="이메일"><br><br>
     <input id="loginPassword" type="password" placeholder="비밀번호"><br><br>
 
     <button id="loginSubmitBtn">로그인</button>
+    <br><br>
+
+    <button id="toSignupBtn">계정이 없나요? 회원가입</button>
   </div>
 
-  <!-- 화면 전환 로직 -->
   <script type="module" src="script.js"></script>
-
 </body>
 </html>
