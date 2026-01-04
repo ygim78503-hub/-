@@ -1,4 +1,4 @@
-// Firebase SDK (v9 모듈 방식)
+// Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
   getAuth,
@@ -16,34 +16,40 @@ const firebaseConfig = {
   appId: "1:583700899332:web:6e9064ccf93f676dd03751"
 };
 
-// Firebase 초기화
+// 초기화
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// DOM 요소
-const startBtn = document.getElementById("startBtn");
-const signupBtn = document.getElementById("signupBtn");
-const loginBtn = document.getElementById("loginBtn");
-
+// DOM
 const home = document.getElementById("home");
 const authPage = document.getElementById("auth");
 const signupPage = document.getElementById("signupPage");
 const loginPage = document.getElementById("loginPage");
 
-// 화면 전환
-startBtn.onclick = () => {
+document.getElementById("startBtn").onclick = () => {
   home.style.display = "none";
   authPage.style.display = "block";
 };
 
-signupBtn.onclick = () => {
+document.getElementById("signupBtn").onclick = () => {
   authPage.style.display = "none";
   signupPage.style.display = "block";
 };
 
-loginBtn.onclick = () => {
+document.getElementById("loginBtn").onclick = () => {
   authPage.style.display = "none";
   loginPage.style.display = "block";
+};
+
+// 회원가입 ↔ 로그인 이동
+document.getElementById("toLoginBtn").onclick = () => {
+  signupPage.style.display = "none";
+  loginPage.style.display = "block";
+};
+
+document.getElementById("toSignupBtn").onclick = () => {
+  loginPage.style.display = "none";
+  signupPage.style.display = "block";
 };
 
 // 회원가입
@@ -53,7 +59,9 @@ document.getElementById("signupSubmitBtn").onclick = async () => {
 
   try {
     await createUserWithEmailAndPassword(auth, email, password);
-    alert("회원가입 성공!");
+    alert("회원가입 완료! 로그인 해주세요.");
+    signupPage.style.display = "none";
+    loginPage.style.display = "block";
   } catch (error) {
     alert(error.message);
   }
