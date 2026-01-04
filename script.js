@@ -1,4 +1,4 @@
-// Firebase SDK
+// Firebase SDK (v9 모듈 방식)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
   getAuth,
@@ -6,22 +6,21 @@ import {
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// 🔑 네 Firebase 설정 (진짜 값!)
+// Firebase 설정
 const firebaseConfig = {
   apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
   authDomain: "reply-service-f3d73.firebaseapp.com",
   projectId: "reply-service-f3d73",
-  storageBucket: "reply-service-f3d73.firebasestorage.app",
+  storageBucket: "reply-service-f3d73.appspot.com",
   messagingSenderId: "583700899332",
-  appId: "1:583700899332:web:6e9064ccf93f676dd03751",
-  measurementId: "G-QKLX3ZE2F7"
+  appId: "1:583700899332:web:6e9064ccf93f676dd03751"
 };
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// DOM
+// DOM 요소
 const startBtn = document.getElementById("startBtn");
 const signupBtn = document.getElementById("signupBtn");
 const loginBtn = document.getElementById("loginBtn");
@@ -48,7 +47,7 @@ loginBtn.onclick = () => {
 };
 
 // 회원가입
-document.getElementById("signupSubmit").onclick = async () => {
+document.getElementById("signupSubmitBtn").onclick = async () => {
   const email = document.getElementById("signupEmail").value;
   const password = document.getElementById("signupPassword").value;
 
@@ -61,7 +60,7 @@ document.getElementById("signupSubmit").onclick = async () => {
 };
 
 // 로그인
-document.getElementById("loginSubmit").onclick = async () => {
+document.getElementById("loginSubmitBtn").onclick = async () => {
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
