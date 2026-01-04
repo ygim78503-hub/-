@@ -8,8 +8,6 @@ import {
 
 // 🔑 네 Firebase 설정 (진짜 값!)
 const firebaseConfig = {
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
   apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
   authDomain: "reply-service-f3d73.firebaseapp.com",
   projectId: "reply-service-f3d73",
