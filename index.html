@@ -1,112 +1,78 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>반복 질문 자동 응답</title>
-  <meta name="description" content="반복되는 고객 질문을 자동으로 응답해주는 서비스">
+  <meta charset="UTF-8">
+  <title>대시보드 - 반복 질문 자동 응답</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
   <!-- 1. 홈 화면 -->
   <div id="home">
-    <h1>
-      같은 고객 질문,<br>
-      이제 자동으로 답하세요
-    </h1>
-
-    <p>
-      배송·환불·영업시간 문의를<br>
-      자동으로 처리합니다.
-    </p>
-
-    <button id="startBtn">
-      1주 무료로 사용해보기
-    </button>
-
-    <p class="small">
-      7일 무료 체험 · 이후 월 9,900원
-    </p>
+    <h1>같은 고객 질문,<br>이제 자동으로 답하세요</h1>
+    <p>배송·환불·영업시간 문의를 자동으로 처리합니다.</p>
+    <button id="startBtn">1주 무료로 사용해보기</button>
+    <p class="small">7일 무료 체험 · 이후 월 9,900원</p>
   </div>
 
-  <!-- 2. 서비스 설명 + 선택 -->
-  <div id="auth" style="display: none;">
-    <h2>이 서비스는 뭐냐면</h2>
-
-    <p>
-      자주 반복되는 고객 질문을<br>
-      자동으로 응답해주는 서비스입니다.<br><br>
-      카카오톡 · 인스타 · 쇼핑몰 문의를 줄여줍니다.
-    </p>
-
-    <button id="signupBtn">
-      회원가입
-    </button>
-
-    <button id="loginBtn">
-      로그인
-    </button>
+  <!-- 2. 회원가입 / 로그인 선택 -->
+  <div id="auth" style="display:none;">
+    <h2>서비스 소개</h2>
+    <p>자주 반복되는 고객 질문을 자동으로 응답해줍니다.</p>
+    <button id="signupBtn">회원가입</button>
+    <button id="loginBtn">로그인</button>
   </div>
 
-  <!-- 3. 회원가입 화면 -->
-  <div id="signupPage" style="display: none;">
+  <!-- 3. 회원가입 -->
+  <div id="signupPage" style="display:none;">
     <h2>회원가입</h2>
-
-    <p class="small">
-      7일 무료 체험 · 이후 월 9,900원<br>
-      무료 기간 종료 후 자동 결제됩니다
-    </p>
-
-    <input
-      id="signupEmail"
-      type="email"
-      placeholder="이메일"
-    >
-
-    <input
-      id="signupPassword"
-      type="password"
-      placeholder="비밀번호"
-    >
-
-    <button id="signupSubmitBtn">
-      회원가입
-    </button>
-
-    <button id="goLoginBtn" class="link-btn">
-      이미 계정이 있나요? 로그인
-    </button>
+    <input id="signupEmail" type="email" placeholder="이메일">
+    <input id="signupPassword" type="password" placeholder="비밀번호">
+    <button id="signupSubmitBtn">회원가입</button>
+    <button id="goLoginBtn" class="link-btn">이미 계정이 있나요? 로그인</button>
   </div>
 
-  <!-- 4. 로그인 화면 -->
-  <div id="loginPage" style="display: none;">
+  <!-- 4. 로그인 -->
+  <div id="loginPage" style="display:none;">
     <h2>로그인</h2>
-
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="이메일"
-    >
-
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="비밀번호"
-    >
-
-    <button id="loginSubmitBtn">
-      로그인
-    </button>
-
-    <button id="goSignupBtn" class="link-btn">
-      계정이 없나요? 회원가입
-    </button>
+    <input id="loginEmail" type="email" placeholder="이메일">
+    <input id="loginPassword" type="password" placeholder="비밀번호">
+    <button id="loginSubmitBtn">로그인</button>
+    <button id="goSignupBtn" class="link-btn">계정이 없나요? 회원가입</button>
   </div>
 
-  <!-- JS -->
-  <script type="module" src="script.js"></script>
+  <!-- 5. 대시보드 -->
+  <div id="dashboard" style="display:none;">
+    <!-- 상단 헤더 -->
+    <header>
+      <button id="menuBtn">☰</button>
+      <span class="service-name">반복 질문 자동 응답</span>
+      <button id="installBtn">앱 설치</button>
+    </header>
 
+    <!-- 사이드바 -->
+    <nav id="sidebar">
+      <ul>
+        <li>개인정보</li>
+        <li>설정</li>
+        <li id="logoutBtn">로그아웃</li>
+      </ul>
+    </nav>
+
+    <!-- 메인 영역 -->
+    <main>
+      <h2>환영합니다!</h2>
+      <p>여기에 질문 자동응답 기능이 표시됩니다.</p>
+    </main>
+
+    <!-- 하단 -->
+    <footer>
+      <button class="social-btn">YouTube</button>
+      <button class="social-btn">Instagram</button>
+    </footer>
+  </div>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>
