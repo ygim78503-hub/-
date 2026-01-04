@@ -2,56 +2,45 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>대시보드 - 반복 질문 자동 응답</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>반복 질문 자동 응답</title>
+  <meta name="description" content="반복되는 고객 질문을 자동으로 응답해주는 서비스">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 1. 홈 화면 -->
-  <div id="home">
+  <!-- 홈 -->
+  <div id="home" class="page">
     <h1>같은 고객 질문,<br>이제 자동으로 답하세요</h1>
     <p>배송·환불·영업시간 문의를 자동으로 처리합니다.</p>
     <button id="startBtn">1주 무료로 사용해보기</button>
     <p class="small">7일 무료 체험 · 이후 월 9,900원</p>
   </div>
 
-  <!-- 2. 회원가입 / 로그인 선택 -->
-  <div id="auth" style="display:none;">
-    <h2>서비스 소개</h2>
-    <p>자주 반복되는 고객 질문을 자동으로 응답해줍니다.</p>
-    <button id="signupBtn">회원가입</button>
-    <button id="loginBtn">로그인</button>
-  </div>
-
-  <!-- 3. 회원가입 -->
-  <div id="signupPage" style="display:none;">
+  <!-- 회원가입 -->
+  <div id="signupPage" class="page" style="display:none;">
     <h2>회원가입</h2>
-    <input id="signupEmail" type="email" placeholder="이메일">
-    <input id="signupPassword" type="password" placeholder="비밀번호">
+    <input id="signupEmail" type="email" placeholder="이메일"><br><br>
+    <input id="signupPassword" type="password" placeholder="비밀번호"><br><br>
     <button id="signupSubmitBtn">회원가입</button>
-    <button id="goLoginBtn" class="link-btn">이미 계정이 있나요? 로그인</button>
+    <button id="gotoLogin">이미 계정이 있나요? 로그인</button>
   </div>
 
-  <!-- 4. 로그인 -->
-  <div id="loginPage" style="display:none;">
+  <!-- 로그인 -->
+  <div id="loginPage" class="page" style="display:none;">
     <h2>로그인</h2>
-    <input id="loginEmail" type="email" placeholder="이메일">
-    <input id="loginPassword" type="password" placeholder="비밀번호">
+    <input id="loginEmail" type="email" placeholder="이메일"><br><br>
+    <input id="loginPassword" type="password" placeholder="비밀번호"><br><br>
     <button id="loginSubmitBtn">로그인</button>
-    <button id="goSignupBtn" class="link-btn">계정이 없나요? 회원가입</button>
+    <button id="gotoSignup">계정이 없나요? 회원가입</button>
   </div>
 
-  <!-- 5. 대시보드 -->
-  <div id="dashboard" style="display:none;">
-    <!-- 상단 헤더 -->
+  <!-- 대시보드 -->
+  <div id="dashboard" class="page" style="display:none;">
     <header>
       <button id="menuBtn">☰</button>
       <span class="service-name">반복 질문 자동 응답</span>
       <button id="installBtn">앱 설치</button>
     </header>
-
-    <!-- 사이드바 -->
     <nav id="sidebar">
       <ul>
         <li>개인정보</li>
@@ -59,20 +48,93 @@
         <li id="logoutBtn">로그아웃</li>
       </ul>
     </nav>
-
-    <!-- 메인 영역 -->
     <main>
       <h2>환영합니다!</h2>
       <p>여기에 질문 자동응답 기능이 표시됩니다.</p>
     </main>
-
-    <!-- 하단 -->
     <footer>
       <button class="social-btn">YouTube</button>
       <button class="social-btn">Instagram</button>
     </footer>
   </div>
 
-  <script type="module" src="script.js"></script>
+  <!-- Firebase + SPA + History API -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // Firebase 설정
+    const firebaseConfig = {
+      apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
+      authDomain: "reply-service-f3d73.firebaseapp.com",
+      projectId: "reply-service-f3d73",
+      storageBucket: "reply-service-f3d73.firebasestorage.app",
+      messagingSenderId: "583700899332",
+      appId: "1:583700899332:web:6e9064ccf93f676dd03751",
+      measurementId: "G-QKLX3ZE2F7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // DOM
+    const pages = {
+      home: document.getElementById("home"),
+      signup: document.getElementById("signupPage"),
+      login: document.getElementById("loginPage"),
+      dashboard: document.getElementById("dashboard")
+    };
+
+    // 화면 전환 함수
+    function showPage(name, push=true){
+      Object.values(pages).forEach(p => p.style.display="none");
+      pages[name].style.display = "block";
+      if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
+    }
+
+    // 버튼 이벤트
+    document.getElementById("startBtn").onclick = () => showPage("signup");
+    document.getElementById("gotoLogin").onclick = () => showPage("login");
+    document.getElementById("gotoSignup").onclick = () => showPage("signup");
+
+    // 회원가입
+    document.getElementById("signupSubmitBtn").onclick = async () => {
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      try{
+        await createUserWithEmailAndPassword(auth,email,password);
+        alert("회원가입 성공!");
+        showPage("login");
+      }catch(e){ alert(e.message);}
+    };
+
+    // 로그인
+    document.getElementById("loginSubmitBtn").onclick = async () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      try{
+        await signInWithEmailAndPassword(auth,email,password);
+        alert("로그인 성공!");
+        showPage("dashboard");
+      }catch(e){ alert(e.message);}
+    };
+
+    // 로그아웃
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+      showPage("login");
+    };
+
+    // 브라우저 뒤로/앞 버튼 처리
+    window.onpopstate = (event)=>{
+      const page = event.state?.page || "home";
+      showPage(page,false);
+    };
+
+    // 페이지 직접 접속 시 처리
+    const path = window.location.pathname.replace("/","");
+    if(path && pages[path]) showPage(path,false);
+
+  </script>
 </body>
 </html>
