@@ -11,49 +11,93 @@
 
   <!-- 1. 홈 화면 -->
   <div id="home">
-    <h1>같은 고객 질문,<br>이제 자동으로 답하세요</h1>
-    <p>배송·환불·영업시간 문의를 자동으로 처리합니다.</p>
-    <button id="startBtn">무료로 시작하기</button>
+    <h1>
+      같은 고객 질문,<br>
+      이제 자동으로 답하세요
+    </h1>
+    <p>
+      배송·환불·영업시간 문의를<br>
+      자동으로 처리합니다.
+    </p>
+
+    <button id="startBtn">
+      1주 무료로 사용해보기
+    </button>
   </div>
 
-  <!-- 2. 회원가입 / 로그인 선택 -->
-  <div id="auth" style="display:none;">
+  <!-- 2. 안내 + 선택 화면 -->
+  <div id="auth" style="display: none;">
     <h2>이 서비스는 뭐냐면</h2>
     <p>
       자주 반복되는 고객 질문을<br>
-      자동으로 응답해주는 서비스입니다.
+      자동으로 응답해주는 서비스입니다.<br><br>
+      카카오톡, 인스타, 쇼핑몰 문의를 줄여줍니다.
     </p>
 
     <button id="signupBtn">회원가입</button>
     <button id="loginBtn">로그인</button>
   </div>
 
-  <!-- 3. 회원가입 -->
-  <div id="signupPage" style="display:none;">
+  <!-- 3. 회원가입 화면 -->
+  <div id="signupPage" style="display: none;">
     <h2>회원가입</h2>
 
-    <input id="signupEmail" type="email" placeholder="이메일"><br><br>
-    <input id="signupPassword" type="password" placeholder="비밀번호"><br><br>
+    <p style="font-size: 14px; color: gray;">
+      7일 무료 체험 · 이후 월 9,900원
+    </p>
 
-    <button id="signupSubmitBtn">회원가입</button>
+    <input
+      id="signupEmail"
+      type="email"
+      placeholder="이메일"
+    ><br><br>
+
+    <input
+      id="signupPassword"
+      type="password"
+      placeholder="비밀번호"
+    ><br><br>
+
+    <button id="signupSubmitBtn">
+      회원가입
+    </button>
+
     <br><br>
 
-    <button id="toLoginBtn">이미 계정이 있나요? 로그인</button>
+    <button id="goLoginBtn" style="background: none; border: none; color: blue; cursor: pointer;">
+      이미 계정이 있나요? 로그인
+    </button>
   </div>
 
-  <!-- 4. 로그인 -->
-  <div id="loginPage" style="display:none;">
+  <!-- 4. 로그인 화면 -->
+  <div id="loginPage" style="display: none;">
     <h2>로그인</h2>
 
-    <input id="loginEmail" type="email" placeholder="이메일"><br><br>
-    <input id="loginPassword" type="password" placeholder="비밀번호"><br><br>
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="이메일"
+    ><br><br>
 
-    <button id="loginSubmitBtn">로그인</button>
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="비밀번호"
+    ><br><br>
+
+    <button id="loginSubmitBtn">
+      로그인
+    </button>
+
     <br><br>
 
-    <button id="toSignupBtn">계정이 없나요? 회원가입</button>
+    <button id="goSignupBtn" style="background: none; border: none; color: blue; cursor: pointer;">
+      계정이 없나요? 회원가입
+    </button>
   </div>
 
+  <!-- JS -->
   <script type="module" src="script.js"></script>
+
 </body>
-</html>
+  </html>
