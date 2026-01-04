@@ -45,5 +45,21 @@
   </div>
 
   <script src="script.js"></script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "여기에_너_값",
+    authDomain: "여기에_너_값",
+    projectId: "여기에_너_값",
+    storageBucket: "여기에_너_값",
+    messagingSenderId: "여기에_너_값",
+    appId: "여기에_너_값"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window.auth = getAuth(app);
+  </script>
 </body>
 </html>
