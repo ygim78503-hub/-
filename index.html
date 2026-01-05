@@ -47,13 +47,23 @@
         <li>개인정보</li>
         <li>설정</li>
         <li id="logoutBtn">로그아웃</li>
-        <li id="closeSidebarBtn">대시보드 닫기</li>
+        <li id="closeDashboardBtn">대시보드 닫기</li>
       </ul>
     </nav>
 
     <main>
       <h2>환영합니다!</h2>
-      <p>여기에 질문 자동응답 기능이 표시됩니다.</p>
+      <p>여기에서 반복 질문 자동응답 기능을 확인하고 관리할 수 있습니다.</p>
+
+      <p>💡 사용 방법:</p>
+      <ul>
+        <li>새로운 질문이 들어오면 자동으로 답변을 작성합니다.</li>
+        <li>중요한 질문은 알림으로 바로 확인할 수 있습니다.</li>
+        <li>설정에서 답변 스타일과 우선순위를 조정하세요.</li>
+      </ul>
+
+      <button id="addQuestionBtn">새 질문 등록하기</button>
+      <button id="viewStatsBtn">응답 통계 확인</button>
     </main>
 
     <footer>
@@ -62,6 +72,7 @@
     </footer>
   </div>
 
+  <!-- Firebase + SPA + History API -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
