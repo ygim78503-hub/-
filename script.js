@@ -10,7 +10,6 @@ const firebaseConfig = {
   messagingSenderId: "583700899332",
   appId: "1:583700899332:web:6e9064ccf93f676dd03751"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
@@ -29,7 +28,8 @@ const sidebar = document.getElementById("sidebar");
 function showPage(name, push=true){
   Object.values(pages).forEach(p => p.style.display="none");
   pages[name].style.display = "block";
-  if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
+  if(name === "dashboard") sidebar.classList.remove("open");
+  if(push) location.hash = name==="home"?"":name;
 }
 
 // 버튼 이벤트
@@ -65,27 +65,20 @@ document.getElementById("loginSubmitBtn").onclick = async () => {
 document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
   showPage("login");
-  sidebar.style.left = "-250px";
-  document.body.classList.remove("sidebar-open");
 };
 
-// 삼선 메뉴
+// 삼선 메뉴 toggle
 menuBtn.onclick = () => {
-  if(sidebar.style.left === "0px"){
-    sidebar.style.left="-250px";
-    document.body.classList.remove("sidebar-open");
-  } else {
-    sidebar.style.left="0px";
-    document.body.classList.add("sidebar-open");
-  }
+  sidebar.classList.toggle("open");
+  document.body.classList.toggle("sidebar-open");
 };
 
-// 브라우저 뒤로/앞 버튼 처리
-window.onpopstate = (event)=>{
-  const page = event.state?.page || "home";
-  showPage(page,false);
-};
+// 해시 라우팅 처리
+window.addEventListener("hashchange", ()=>{
+  const page = location.hash.replace("#","");
+  if(page && pages[page]) showPage(page,false);
+});
 
 // 페이지 직접 접속 시 처리
-const path = window.location.pathname.replace("/","");
-if(path && pages[path]) showPage(path,false);
+const initialPage = location.hash.replace("#","");
+if(initialPage && pages[initialPage]) showPage(initialPage,false);
