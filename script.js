@@ -10,6 +10,7 @@ const firebaseConfig = {
   messagingSenderId: "583700899332",
   appId: "1:583700899332:web:6e9064ccf93f676dd03751"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
@@ -28,8 +29,7 @@ const sidebar = document.getElementById("sidebar");
 function showPage(name, push=true){
   Object.values(pages).forEach(p => p.style.display="none");
   pages[name].style.display = "block";
-  if(name === "dashboard") sidebar.classList.remove("open");
-  if(push) location.hash = name==="home"?"":name;
+  if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
 }
 
 // 버튼 이벤트
@@ -56,7 +56,6 @@ document.getElementById("loginSubmitBtn").onclick = async () => {
   if(!email || !password) return alert("이메일과 비밀번호를 입력하세요");
   try{
     await signInWithEmailAndPassword(auth,email,password);
-    alert("로그인 성공!");
     showPage("dashboard");
   }catch(e){ alert(e.message);}
 };
@@ -65,20 +64,43 @@ document.getElementById("loginSubmitBtn").onclick = async () => {
 document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
   showPage("login");
+  sidebar.style.left = "-250px";
+  document.body.classList.remove("sidebar-open");
 };
 
-// 삼선 메뉴 toggle
+// 삼선 메뉴 열기/닫기
 menuBtn.onclick = () => {
-  sidebar.classList.toggle("open");
-  document.body.classList.toggle("sidebar-open");
+  if(sidebar.style.left === "0px"){
+    sidebar.style.left="-250px";
+    document.body.classList.remove("sidebar-open");
+  } else {
+    sidebar.style.left="0px";
+    document.body.classList.add("sidebar-open");
+  }
 };
 
-// 해시 라우팅 처리
-window.addEventListener("hashchange", ()=>{
-  const page = location.hash.replace("#","");
-  if(page && pages[page]) showPage(page,false);
+// 대시보드 닫기 버튼 추가 (헤더에 버튼 만들어야 함)
+const dashboardCloseBtn = document.createElement("button");
+dashboardCloseBtn.textContent = "← 홈";
+dashboardCloseBtn.style.marginLeft = "10px";
+dashboardCloseBtn.onclick = () => showPage("home");
+document.querySelector("#dashboard header").prepend(dashboardCloseBtn);
+
+// 새로고침 후 로그인 상태 유지
+auth.onAuthStateChanged(user => {
+  if(user){
+    showPage("dashboard", false);
+  } else {
+    showPage("login", false);
+  }
 });
 
+// 브라우저 뒤로/앞 버튼 처리
+window.onpopstate = (event)=>{
+  const page = event.state?.page || "home";
+  showPage(page,false);
+};
+
 // 페이지 직접 접속 시 처리
-const initialPage = location.hash.replace("#","");
-if(initialPage && pages[initialPage]) showPage(initialPage,false);
+const path = window.location.pathname.replace("/","");
+if(path && pages[path]) showPage(path,false);
