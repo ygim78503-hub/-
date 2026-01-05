@@ -24,12 +24,12 @@ const pages = {
 
 const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
-const closeSidebarBtn = document.getElementById("closeSidebarBtn");
+const closeDashboardBtn = document.getElementById("closeDashboardBtn");
 
-// 화면 전환 함수
+// 화면 전환
 function showPage(name, push=true){
   Object.values(pages).forEach(p => p.style.display="none");
-  pages[name].style.display="block";
+  pages[name].style.display = "block";
   if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
 }
 
@@ -57,6 +57,7 @@ document.getElementById("loginSubmitBtn").onclick = async () => {
   if(!email || !password) return alert("이메일과 비밀번호를 입력하세요");
   try{
     await signInWithEmailAndPassword(auth,email,password);
+    alert("로그인 성공!");
     showPage("dashboard");
   }catch(e){ alert(e.message);}
 };
@@ -65,27 +66,26 @@ document.getElementById("loginSubmitBtn").onclick = async () => {
 document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
   showPage("home");
-  sidebar.style.left = "-250px";
+  sidebar.style.left="-250px";
+  document.body.classList.remove("sidebar-open");
 };
 
 // 삼선 메뉴 열기/닫기
 menuBtn.onclick = () => {
-  sidebar.style.left = sidebar.style.left==="0px"?"-250px":"0px";
+  if(sidebar.style.left === "0px"){
+    sidebar.style.left="-250px";
+    document.body.classList.remove("sidebar-open");
+  } else {
+    sidebar.style.left="0px";
+    document.body.classList.add("sidebar-open");
+  }
 };
 
 // 대시보드 닫기 버튼
-closeSidebarBtn.onclick = () => {
-  sidebar.style.left = "-250px";
+closeDashboardBtn.onclick = () => {
+  sidebar.style.left="-250px";
+  document.body.classList.remove("sidebar-open");
 };
-
-// 새로고침 시 로그인 상태 유지
-auth.onAuthStateChanged(user=>{
-  if(user){
-    showPage("dashboard", false);
-  } else {
-    showPage("home", false);
-  }
-});
 
 // 브라우저 뒤로/앞 버튼 처리
 window.onpopstate = (event)=>{
@@ -96,3 +96,7 @@ window.onpopstate = (event)=>{
 // 페이지 직접 접속 시 처리
 const path = window.location.pathname.replace("/","");
 if(path && pages[path]) showPage(path,false);
+
+// 새 질문 / 통계 버튼 예제
+document.getElementById("addQuestionBtn").onclick = () => alert("새 질문 등록 기능은 아직 개발 중입니다.");
+document.getElementById("viewStatsBtn").onclick = () => alert("응답 통계 확인 기능은 아직 개발 중입니다.");
