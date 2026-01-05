@@ -1,161 +1,37 @@
-/* 기본 페이지 숨김 */
-.page {
-  display: none;
-  padding: 20px;
-  font-family: 'Noto Sans KR', sans-serif;
-}
+/* 공통 */
+.page { display: none; padding: 20px; font-family: 'Noto Sans KR', sans-serif; }
+input { width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc; font-size:14px; }
+button { cursor:pointer; }
 
-/* 홈 화면 */
-#home {
-  display: block;
-  text-align: center;
-  padding-top: 80px;
-}
-
-#home h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-#home p {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-#home button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#home .small {
-  font-size: 12px;
-  color: #555;
-  margin-top: 5px;
-}
-
-/* 입력창 공통 */
-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-/* 버튼 공통 */
-button {
-  cursor: pointer;
-}
+/* 홈 */
+#home { display:block; text-align:center; padding-top:80px; }
+#home h1 { font-size:28px; margin-bottom:10px; }
+#home p { font-size:16px; margin-bottom:20px; }
+#home button { padding:10px 20px; font-size:16px; background:#007bff; color:white; border:none; border-radius:5px; }
+#home .small { font-size:12px; color:#555; margin-top:5px; }
 
 /* 대시보드 헤더 */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #ddd;
-  position: relative;
-}
-
-#menuBtn {
-  font-size: 24px;
-  background: none;
-  border: none;
-}
-
-.service-name {
-  font-weight: bold;
-}
-
-#installBtn {
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
+header { display:flex; justify-content:space-between; align-items:center; padding:10px 20px; background:#f8f8f8; border-bottom:1px solid #ddd; position:relative; }
+#menuBtn { font-size:24px; background:none; border:none; }
+.service-name { font-weight:bold; }
+#installBtn { padding:5px 10px; background:#007bff; color:white; border:none; border-radius:5px; }
 
 /* 사이드바 */
-#sidebar {
-  position: fixed;
-  top: 0;
-  left: -250px;
-  width: 250px;
-  height: 100%;
-  background-color: #222;
-  color: #fff;
-  padding-top: 60px;
-  transition: left 0.3s ease;
-  z-index: 1000;
-}
+#sidebar { position:fixed; top:0; left:-250px; width:250px; height:100%; background:#222; color:white; padding-top:60px; transition:left 0.3s ease; z-index:1000; }
+body.sidebar-open { overflow:hidden; }
+#sidebar ul { list-style:none; padding:0; margin:0; }
+#sidebar ul li { padding:15px 20px; border-bottom:1px solid #444; cursor:pointer; }
+#sidebar ul li:hover { background:#444; }
 
-body.sidebar-open {
-  overflow: hidden;
-}
-
-#sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#sidebar ul li {
-  padding: 15px 20px;
-  border-bottom: 1px solid #444;
-  cursor: pointer;
-}
-
-#sidebar ul li:hover {
-  background-color: #444;
-}
+/* 사이드바 닫기 버튼 */
+.close-dashboard-btn { width: calc(100% - 40px); margin:20px; padding:10px; background:#ff4d4f; color:white; border:none; border-radius:5px; }
+.close-dashboard-btn:hover { background:#d9363e; }
 
 /* 메인 영역 */
-main {
-  padding: 20px;
-  transition: margin-left 0.3s ease;
-}
-
-body.sidebar-open main {
-  margin-left: 250px;
-}
+main { padding:20px; transition: margin-left 0.3s ease; }
+body.sidebar-open main { margin-left:250px; }
 
 /* 푸터 */
-footer {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  gap: 10px;
-}
-
-.social-btn {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #555;
-  color: white;
-}
-
-.social-btn:hover {
-  background-color: #333;
-}
-
-/* 대시보드 닫기 버튼 */
-.close-dashboard-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #ff4d4f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
-
-.close-dashboard-btn:hover {
-  background-color: #d9363e;
-}
+footer { display:flex; justify-content:center; padding:10px; gap:10px; }
+.social-btn { padding:5px 10px; border:none; border-radius:5px; background:#555; color:white; }
+.social-btn:hover { background:#333; }
