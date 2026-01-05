@@ -1,11 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // Firebase 설정
 const firebaseConfig = {
@@ -35,7 +29,7 @@ const closeSidebarBtn = document.getElementById("closeSidebarBtn");
 // 화면 전환 함수
 function showPage(name, push=true){
   Object.values(pages).forEach(p => p.style.display="none");
-  pages[name].style.display = "block";
+  pages[name].style.display="block";
   if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
 }
 
@@ -72,28 +66,20 @@ document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
   showPage("home");
   sidebar.style.left = "-250px";
-  document.body.classList.remove("sidebar-open");
 };
 
 // 삼선 메뉴 열기/닫기
 menuBtn.onclick = () => {
-  if(sidebar.style.left === "0px"){
-    sidebar.style.left="-250px";
-    document.body.classList.remove("sidebar-open");
-  } else {
-    sidebar.style.left="0px";
-    document.body.classList.add("sidebar-open");
-  }
+  sidebar.style.left = sidebar.style.left==="0px"?"-250px":"0px";
 };
 
-// 사이드바 닫기 버튼
+// 대시보드 닫기 버튼
 closeSidebarBtn.onclick = () => {
   sidebar.style.left = "-250px";
-  document.body.classList.remove("sidebar-open");
 };
 
-// 로그인 상태 유지
-onAuthStateChanged(auth, user => {
+// 새로고침 시 로그인 상태 유지
+auth.onAuthStateChanged(user=>{
   if(user){
     showPage("dashboard", false);
   } else {
