@@ -1,5 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // Firebase 설정
 const firebaseConfig = {
@@ -26,11 +32,11 @@ const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
 const closeSidebarBtn = document.getElementById("closeSidebarBtn");
 
-// 화면 전환
+// 화면 전환 함수
 function showPage(name, push=true){
   Object.values(pages).forEach(p => p.style.display="none");
   pages[name].style.display = "block";
-  if(push) history.pushState({page:name},"", name==="home"?"/":"/"+name);
+  if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
 }
 
 // 버튼 이벤트
@@ -43,11 +49,11 @@ document.getElementById("signupSubmitBtn").onclick = async () => {
   const email = document.getElementById("signupEmail").value;
   const password = document.getElementById("signupPassword").value;
   if(!email || !password) return alert("이메일과 비밀번호를 입력하세요");
-  try {
+  try{
     await createUserWithEmailAndPassword(auth,email,password);
     alert("회원가입 성공!");
     showPage("login");
-  } catch(e){ alert(e.message);}
+  }catch(e){ alert(e.message);}
 };
 
 // 로그인
@@ -55,22 +61,21 @@ document.getElementById("loginSubmitBtn").onclick = async () => {
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
   if(!email || !password) return alert("이메일과 비밀번호를 입력하세요");
-  try {
+  try{
     await signInWithEmailAndPassword(auth,email,password);
-    alert("로그인 성공!");
     showPage("dashboard");
-  } catch(e){ alert(e.message);}
+  }catch(e){ alert(e.message);}
 };
 
 // 로그아웃
 document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
   showPage("home");
-  sidebar.style.left="-250px";
+  sidebar.style.left = "-250px";
   document.body.classList.remove("sidebar-open");
 };
 
-// 삼선 메뉴
+// 삼선 메뉴 열기/닫기
 menuBtn.onclick = () => {
   if(sidebar.style.left === "0px"){
     sidebar.style.left="-250px";
@@ -83,9 +88,18 @@ menuBtn.onclick = () => {
 
 // 사이드바 닫기 버튼
 closeSidebarBtn.onclick = () => {
-  sidebar.style.left="-250px";
+  sidebar.style.left = "-250px";
   document.body.classList.remove("sidebar-open");
 };
+
+// 로그인 상태 유지
+onAuthStateChanged(auth, user => {
+  if(user){
+    showPage("dashboard", false);
+  } else {
+    showPage("home", false);
+  }
+});
 
 // 브라우저 뒤로/앞 버튼 처리
 window.onpopstate = (event)=>{
