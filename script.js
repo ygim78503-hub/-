@@ -1,10 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // Firebase 설정
 const firebaseConfig = {
@@ -20,80 +15,77 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // DOM
-const home = document.getElementById("home");
-const authPage = document.getElementById("auth");
-const signupPage = document.getElementById("signupPage");
-const loginPage = document.getElementById("loginPage");
-const dashboard = document.getElementById("dashboard");
+const pages = {
+  home: document.getElementById("home"),
+  signup: document.getElementById("signupPage"),
+  login: document.getElementById("loginPage"),
+  dashboard: document.getElementById("dashboard")
+};
 
-const startBtn = document.getElementById("startBtn");
-const signupBtn = document.getElementById("signupBtn");
-const loginBtn = document.getElementById("loginBtn");
-const goLoginBtn = document.getElementById("goLoginBtn");
-const goSignupBtn = document.getElementById("goSignupBtn");
-
-const signupSubmitBtn = document.getElementById("signupSubmitBtn");
-const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
-const logoutBtn = document.getElementById("logoutBtn");
 
-// 화면 전환 함수
-function show(page) {
-  home.style.display = "none";
-  authPage.style.display = "none";
-  signupPage.style.display = "none";
-  loginPage.style.display = "none";
-  dashboard.style.display = "none";
-  page.style.display = "block";
-  if(page===dashboard) document.body.classList.remove("sidebar-open");
+// 화면 전환
+function showPage(name, push=true){
+  Object.values(pages).forEach(p => p.style.display="none");
+  pages[name].style.display = "block";
+  if(push) history.pushState({page:name}, "", name==="home"?"/":"/"+name);
 }
 
-// 화면 전환 이벤트
-startBtn.onclick = () => show(authPage);
-signupBtn.onclick = () => show(signupPage);
-loginBtn.onclick = () => show(loginPage);
-goLoginBtn.onclick = () => show(loginPage);
-goSignupBtn.onclick = () => show(signupPage);
+// 버튼 이벤트
+document.getElementById("startBtn").onclick = () => showPage("signup");
+document.getElementById("gotoLogin").onclick = () => showPage("login");
+document.getElementById("gotoSignup").onclick = () => showPage("signup");
 
 // 회원가입
-signupSubmitBtn.onclick = async () => {
+document.getElementById("signupSubmitBtn").onclick = async () => {
   const email = document.getElementById("signupEmail").value;
   const password = document.getElementById("signupPassword").value;
   if(!email || !password) return alert("이메일과 비밀번호를 입력하세요");
-  try {
+  try{
     await createUserWithEmailAndPassword(auth,email,password);
-    alert("회원가입 성공! 로그인해주세요.");
-    show(loginPage);
-  } catch(e) { alert(e.message); }
+    alert("회원가입 성공!");
+    showPage("login");
+  }catch(e){ alert(e.message);}
 };
 
 // 로그인
-loginSubmitBtn.onclick = async () => {
+document.getElementById("loginSubmitBtn").onclick = async () => {
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
   if(!email || !password) return alert("이메일과 비밀번호를 입력하세요");
-  try {
+  try{
     await signInWithEmailAndPassword(auth,email,password);
-    show(dashboard);
-  } catch(e) { alert(e.message); }
+    alert("로그인 성공!");
+    showPage("dashboard");
+  }catch(e){ alert(e.message);}
 };
 
-// 삼선 메뉴 열고 닫기 (애니메이션)
+// 로그아웃
+document.getElementById("logoutBtn").onclick = async () => {
+  await signOut(auth);
+  showPage("login");
+  sidebar.style.left = "-250px";
+  document.body.classList.remove("sidebar-open");
+};
+
+// 삼선 메뉴
 menuBtn.onclick = () => {
-  if(sidebar.style.left === "0px") {
-    sidebar.style.left = "-250px";
+  if(sidebar.style.left === "0px"){
+    sidebar.style.left="-250px";
     document.body.classList.remove("sidebar-open");
   } else {
-    sidebar.style.left = "0px";
+    sidebar.style.left="0px";
     document.body.classList.add("sidebar-open");
   }
 };
 
-// 로그아웃
-logoutBtn.onclick = async () => {
-  await signOut(auth);
-  show(home);
-  sidebar.style.left="-250px";
-  document.body.classList.remove("sidebar-open");
+// 브라우저 뒤로/앞 버튼 처리
+window.onpopstate = (event)=>{
+  const page = event.state?.page || "home";
+  showPage(page,false);
 };
+
+// 페이지 직접 접속 시 처리
+const path = window.location.pathname.replace("/","");
+if(path && pages[path]) showPage(path,false);
