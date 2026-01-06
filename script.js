@@ -7,12 +7,11 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* Firebase 설정 */
 const firebaseConfig = {
   apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
   authDomain: "reply-service-f3d73.firebaseapp.com",
   projectId: "reply-service-f3d73",
-  storageBucket: "reply-service-f3d73.appspot.com",
+  storageBucket: "reply-service-f3d73.firebasestorage.app",
   messagingSenderId: "583700899332",
   appId: "1:583700899332:web:6e9064ccf93f676dd03751"
 };
@@ -20,76 +19,67 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* 페이지 관리 */
+/* 페이지 */
 const pages = {
   home: document.getElementById("home"),
   signup: document.getElementById("signupPage"),
   login: document.getElementById("loginPage"),
-  dashboard: document.getElementById("dashboard"),
-  rule: document.getElementById("rulePage")
+  dashboard: document.getElementById("dashboard")
 };
 
+const sidebar = document.getElementById("sidebar");
+
+/* 페이지 전환 */
 function showPage(name) {
   Object.values(pages).forEach(p => p.style.display = "none");
   pages[name].style.display = "block";
 }
 
-/* 초기 화면 */
+/* 초기 */
 showPage("home");
 
-/* 홈 */
-startBtn.onclick = () => showPage("signup");
-
-/* 이동 */
-gotoLogin.onclick = () => showPage("login");
-gotoSignup.onclick = () => showPage("signup");
+/* 버튼 */
+document.getElementById("startBtn").onclick = () => showPage("signup");
+document.getElementById("gotoLogin").onclick = () => showPage("login");
+document.getElementById("gotoSignup").onclick = () => showPage("signup");
 
 /* 회원가입 */
-signupSubmitBtn.onclick = async () => {
-  await createUserWithEmailAndPassword(
-    auth,
-    signupEmail.value,
-    signupPassword.value
-  );
-  showPage("dashboard");
+document.getElementById("signupSubmitBtn").onclick = async () => {
+  const email = signupEmail.value;
+  const password = signupPassword.value;
+  await createUserWithEmailAndPassword(auth, email, password);
 };
 
 /* 로그인 */
-loginSubmitBtn.onclick = async () => {
-  await signInWithEmailAndPassword(
-    auth,
-    loginEmail.value,
-    loginPassword.value
-  );
-  showPage("dashboard");
+document.getElementById("loginSubmitBtn").onclick = async () => {
+  const email = loginEmail.value;
+  const password = loginPassword.value;
+  await signInWithEmailAndPassword(auth, email, password);
 };
 
 /* 로그인 유지 */
 onAuthStateChanged(auth, user => {
   if (user) showPage("dashboard");
+  else showPage("home");
 });
 
 /* 로그아웃 */
-logoutBtn.onclick = async () => {
+document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
   document.body.classList.remove("sidebar-open");
-  showPage("home");
 };
 
-/* 사이드바 */
-menuBtn.onclick = () => {
+/* 삼선 메뉴 */
+document.getElementById("menuBtn").onclick = () => {
   document.body.classList.toggle("sidebar-open");
 };
 
-closeSidebarBtn.onclick = () => {
+/* 사이드바 닫기 */
+document.getElementById("closeSidebarBtn").onclick = () => {
   document.body.classList.remove("sidebar-open");
 };
 
 /* 질문 응답 등록 */
-openRulePage.onclick = () => showPage("rule");
-backToDashboard.onclick = () => showPage("dashboard");
-
-/* 저장 버튼 (현재는 동작만) */
-saveRuleBtn.onclick = () => {
-  alert("다음 단계에서 Firebase에 저장됩니다!");
+document.getElementById("addQAButton").onclick = () => {
+  alert("다음 단계에서 질문/응답 등록 화면을 만들 예정입니다!");
 };
