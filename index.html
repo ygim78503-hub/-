@@ -10,10 +10,10 @@
 
 <!-- 홈 -->
 <div id="home" class="page">
-  <h1>같은 질문,<br>이제 자동으로 응답하세요</h1>
-  <p>반복되는 문의를 한 번의 설정으로 해결합니다.</p>
-  <button id="startBtn">시작하기</button>
-  <p class="small">무료로 시작 가능</p>
+  <h1>같은 질문,<br>이제 자동으로 처리하세요</h1>
+  <p>반복되는 문의를 한 번의 설정으로 해결하세요.</p>
+  <button id="startBtn">무료로 시작하기</button>
+  <p class="small">회원가입 후 바로 사용 가능</p>
 </div>
 
 <!-- 회원가입 -->
@@ -22,7 +22,7 @@
   <input id="signupEmail" type="email" placeholder="이메일">
   <input id="signupPassword" type="password" placeholder="비밀번호">
   <button id="signupSubmitBtn">회원가입</button>
-  <button id="gotoLogin" class="secondary">이미 계정이 있나요?</button>
+  <button class="secondary" id="gotoLogin">이미 계정이 있나요?</button>
 </div>
 
 <!-- 로그인 -->
@@ -31,7 +31,7 @@
   <input id="loginEmail" type="email" placeholder="이메일">
   <input id="loginPassword" type="password" placeholder="비밀번호">
   <button id="loginSubmitBtn">로그인</button>
-  <button id="gotoSignup" class="secondary">회원가입</button>
+  <button class="secondary" id="gotoSignup">계정이 없나요?</button>
 </div>
 
 <!-- 대시보드 -->
@@ -39,7 +39,8 @@
 
   <header>
     <button id="menuBtn">☰</button>
-    <span class="service-name">자동응답 대시보드</span>
+    <span class="service-name">자동 응답 대시보드</span>
+    <span></span>
   </header>
 
   <!-- 사이드바 -->
@@ -52,38 +53,38 @@
     </ul>
   </nav>
 
+  <!-- 메인 -->
   <main>
     <h2>환영합니다 👋</h2>
-    <p>자동응답 규칙을 관리할 수 있습니다.</p>
+    <p>
+      반복되는 질문을 자동으로 응답하는 개인 비서를 설정할 수 있습니다.
+      한 번 등록해두면, 같은 질문에는 자동으로 응답됩니다.
+    </p>
 
     <div class="card">
-      <button id="openRulePage">질문 · 응답 등록하기</button>
+      <h3>질문 · 응답 관리</h3>
+      <p>새로운 질문과 답변을 등록해 자동 응답을 시작하세요.</p>
+      <button id="addQAButton">질문 응답 등록하기</button>
     </div>
   </main>
-</div>
 
-<!-- 질문 응답 등록 페이지 -->
-<div id="rulePage" class="page">
+  <!-- 푸터 (절대 빠지면 안 됨) -->
+  <footer>
+    <button class="social-btn"
+      onclick="window.open('https://youtube.com','_blank')">
+      YouTube
+    </button>
+    <button class="social-btn"
+      onclick="window.open('https://instagram.com','_blank')">
+      Instagram
+    </button>
+    <button class="social-btn">
+      앱 설치
+    </button>
+  </footer>
 
-  <header>
-    <button id="backToDashboard">←</button>
-    <span class="service-name">질문 · 응답 등록</span>
-  </header>
-
-  <main>
-    <div class="card">
-      <h2>새 자동응답 추가</h2>
-
-      <input id="questionInput" placeholder="자주 묻는 질문">
-      <br><br>
-      <textarea id="answerInput" placeholder="자동으로 보낼 답변"></textarea>
-      <br><br>
-
-      <button id="saveRuleBtn">저장</button>
-    </div>
-  </main>
 </div>
 
 <script type="module" src="script.js"></script>
 </body>
-                                   </html>
+  </html>
