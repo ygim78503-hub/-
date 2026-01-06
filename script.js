@@ -1,25 +1,29 @@
-/* =====================
- Firebase 설정
-===================== */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+/* Firebase 설정 */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT_ID"
+  apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
+  authDomain: "reply-service-f3d73.firebaseapp.com",
+  projectId: "reply-service-f3d73",
+  storageBucket: "reply-service-f3d73.appspot.com",
+  messagingSenderId: "583700899332",
+  appId: "1:583700899332:web:6e9064ccf93f676dd03751"
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore();
+const auth = getAuth(app);
 
-/* =====================
- 페이지 관리
-===================== */
+/* 페이지 관리 */
 const pages = {
   home: document.getElementById("home"),
+  signup: document.getElementById("signupPage"),
   login: document.getElementById("loginPage"),
   dashboard: document.getElementById("dashboard"),
   rule: document.getElementById("rulePage")
@@ -30,83 +34,62 @@ function showPage(name) {
   pages[name].style.display = "block";
 }
 
-/* =====================
- 로그인
-===================== */
-document.getElementById("loginBtn").onclick = async () => {
-  const email = loginEmail.value;
-  const pw = loginPassword.value;
+/* 초기 화면 */
+showPage("home");
 
-  try {
-    await signInWithEmailAndPassword(auth, email, pw);
-  } catch (e) {
-    alert("로그인 실패");
-  }
+/* 홈 */
+startBtn.onclick = () => showPage("signup");
+
+/* 이동 */
+gotoLogin.onclick = () => showPage("login");
+gotoSignup.onclick = () => showPage("signup");
+
+/* 회원가입 */
+signupSubmitBtn.onclick = async () => {
+  await createUserWithEmailAndPassword(
+    auth,
+    signupEmail.value,
+    signupPassword.value
+  );
+  showPage("dashboard");
 };
 
+/* 로그인 */
+loginSubmitBtn.onclick = async () => {
+  await signInWithEmailAndPassword(
+    auth,
+    loginEmail.value,
+    loginPassword.value
+  );
+  showPage("dashboard");
+};
+
+/* 로그인 유지 */
 onAuthStateChanged(auth, user => {
-  if (user) {
-    showPage("dashboard");
-  } else {
-    showPage("home");
-  }
+  if (user) showPage("dashboard");
 });
 
-/* =====================
- 로그아웃
-===================== */
-document.getElementById("logoutBtn").onclick = async () => {
+/* 로그아웃 */
+logoutBtn.onclick = async () => {
   await signOut(auth);
+  document.body.classList.remove("sidebar-open");
   showPage("home");
 };
 
-/* =====================
- 사이드바
-===================== */
-const body = document.body;
-
+/* 사이드바 */
 menuBtn.onclick = () => {
-  body.classList.add("sidebar-open");
+  document.body.classList.toggle("sidebar-open");
 };
 
 closeSidebarBtn.onclick = () => {
-  body.classList.remove("sidebar-open");
+  document.body.classList.remove("sidebar-open");
 };
 
-/* =====================
- 자동응답 등록 페이지 이동
-===================== */
-openRulePage.onclick = () => {
-  body.classList.remove("sidebar-open");
-  showPage("rule");
-};
+/* 질문 응답 등록 */
+openRulePage.onclick = () => showPage("rule");
+backToDashboard.onclick = () => showPage("dashboard");
 
-backToDashboard.onclick = () => {
-  showPage("dashboard");
-};
-
-/* =====================
- 자동응답 저장
-===================== */
-saveRuleBtn.onclick = async () => {
-  const keyword = ruleKeyword.value.trim();
-  const answer = ruleAnswer.value.trim();
-  const user = auth.currentUser;
-
-  if (!keyword || !answer) {
-    alert("모두 입력하세요");
-    return;
-  }
-
-  await addDoc(collection(db, "rules"), {
-    userId: user.uid,
-    keyword,
-    answer,
-    createdAt: new Date()
-  });
-
-  alert("자동응답이 저장되었습니다");
-  ruleKeyword.value = "";
-  ruleAnswer.value = "";
-  showPage("dashboard");
+/* 저장 버튼 (현재는 동작만) */
+saveRuleBtn.onclick = () => {
+  alert("다음 단계에서 Firebase에 저장됩니다!");
 };
