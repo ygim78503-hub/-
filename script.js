@@ -100,3 +100,50 @@ if(path && pages[path]) showPage(path,false);
 // 새 질문 / 통계 버튼 예제
 document.getElementById("addQuestionBtn").onclick = () => alert("새 질문 등록 기능은 아직 개발 중입니다.");
 document.getElementById("viewStatsBtn").onclick = () => alert("응답 통계 확인 기능은 아직 개발 중입니다.");
+
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+/**
+ * 자동응답 처리 함수
+ * @param {string} questionText 사용자가 보낸 질문
+ * @param {string} userId 로그인한 사용자 UID
+ */
+async function autoReply(questionText, userId) {
+  // 1. 내 자동응답 규칙 불러오기
+  const q = query(
+    collection(db, "rules"),
+    where("userId", "==", userId)
+  );
+
+  const snapshot = await getDocs(q);
+
+  let matchedAnswer = null;
+
+  snapshot.forEach(doc => {
+    const rule = doc.data();
+    if (questionText.includes(rule.keyword)) {
+      matchedAnswer = rule.answer;
+    }
+  });
+
+  // 2. 질문 기록 저장
+  await addDoc(collection(db, "questions"), {
+    userId,
+    text: questionText,
+    autoAnswer: matchedAnswer || "자동응답 없음",
+    createdAt: serverTimestamp()
+  });
+
+  // 3. 결과 반환
+  return matchedAnswer;
+}
