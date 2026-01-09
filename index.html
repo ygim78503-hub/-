@@ -79,26 +79,51 @@
 
   <main>
     <div class="card">
-      <h2>새 질문 등록</h2>
+      <h2>자동 응답 등록</h2>
 
-      <input
-        id="questionInput"
-        type="text"
-        placeholder="예: 배송은 얼마나 걸리나요?"
-      />
-
+      <!-- 질문 -->
+      <label>질문</label>
       <textarea
-        id="answerInput"
-        placeholder="자동으로 보낼 답변을 입력하세요"
-        style="width:100%; height:120px; margin-top:10px;"
+        id="questionInput"
+        placeholder="예: 배송은 얼마나 걸리나요?"
+        style="width:100%; height:80px; margin-top:6px;"
       ></textarea>
 
-      <button id="saveQnaBtn" style="margin-top:15px; width:100%;">
+      <!-- 답변 -->
+      <label style="margin-top:14px; display:block;">자동 응답</label>
+      <textarea
+        id="answerInput"
+        placeholder="고객에게 자동으로 보낼 답변을 입력하세요"
+        style="width:100%; height:140px; margin-top:6px;"
+      ></textarea>
+
+      <!-- 사용 위치 선택 -->
+      <label style="margin-top:16px; display:block;">사용 위치</label>
+      <div style="display:flex; gap:10px; margin-top:6px;">
+        <button id="typeWeb" class="secondary">웹사이트</button>
+        <button id="typeApp" class="secondary">앱</button>
+      </div>
+
+      <!-- 앱 선택 -->
+      <div id="appSelectBox" style="display:none; margin-top:14px;">
+        <label>앱 종류</label>
+        <select id="appType" style="width:100%; padding:10px; border-radius:10px;">
+          <option value="">앱을 선택하세요</option>
+          <option>Instagram</option>
+          <option>카카오톡</option>
+          <option>문자</option>
+          <option>WhatsApp</option>
+          <option>Discord</option>
+        </select>
+      </div>
+
+      <button id="saveQnaBtn" style="margin-top:20px; width:100%;">
         저장하기
       </button>
     </div>
   </main>
 </div>
+
 
 <script type="module" src="script.js"></script>
 </body>
