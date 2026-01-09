@@ -83,3 +83,21 @@ document.getElementById("closeSidebarBtn").onclick = () => {
 document.getElementById("addQAButton").onclick = () => {
   alert("다음 단계에서 질문/응답 등록 화면을 만들 예정입니다!");
 };
+// 질문 응답 등록 화면 이동
+const qnaBtn = document.getElementById("qnaBtn"); // 기존 버튼
+const qnaPage = document.getElementById("qnaPage");
+const dashboardPage = document.getElementById("dashboard");
+const backBtn = document.getElementById("backToDashboardBtn");
+
+// 질문 응답 등록하기 버튼 클릭
+qnaBtn.onclick = () => {
+  dashboardPage.style.display = "none";
+  qnaPage.style.display = "block";
+};
+
+// 대시보드로 돌아가기
+backBtn.onclick = () => {
+  qnaPage.style.display = "none";
+  dashboardPage.style.display = "block";
+};
+
