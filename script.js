@@ -7,6 +7,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+/* Firebase 설정 */
 const firebaseConfig = {
   apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
   authDomain: "reply-service-f3d73.firebaseapp.com",
@@ -21,83 +22,70 @@ const auth = getAuth(app);
 
 /* 페이지 */
 const pages = {
-  home: document.getElementById("home"),
-  signup: document.getElementById("signupPage"),
-  login: document.getElementById("loginPage"),
-  dashboard: document.getElementById("dashboard")
+  home,
+  signupPage,
+  loginPage,
+  dashboard,
+  qnaPage
 };
 
-const sidebar = document.getElementById("sidebar");
-
-/* 페이지 전환 */
+/* 공통 페이지 전환 */
 function showPage(name) {
   Object.values(pages).forEach(p => p.style.display = "none");
   pages[name].style.display = "block";
 }
 
-/* 초기 */
+/* 초기 화면 */
 showPage("home");
 
-/* 버튼 */
-document.getElementById("startBtn").onclick = () => showPage("signup");
-document.getElementById("gotoLogin").onclick = () => showPage("login");
-document.getElementById("gotoSignup").onclick = () => showPage("signup");
+/* 홈 */
+startBtn.onclick = () => showPage("signupPage");
 
 /* 회원가입 */
-document.getElementById("signupSubmitBtn").onclick = async () => {
-  const email = signupEmail.value;
-  const password = signupPassword.value;
-  await createUserWithEmailAndPassword(auth, email, password);
+signupSubmitBtn.onclick = async () => {
+  await createUserWithEmailAndPassword(
+    auth,
+    signupEmail.value,
+    signupPassword.value
+  );
 };
 
 /* 로그인 */
-document.getElementById("loginSubmitBtn").onclick = async () => {
-  const email = loginEmail.value;
-  const password = loginPassword.value;
-  await signInWithEmailAndPassword(auth, email, password);
+loginSubmitBtn.onclick = async () => {
+  await signInWithEmailAndPassword(
+    auth,
+    loginEmail.value,
+    loginPassword.value
+  );
 };
 
 /* 로그인 유지 */
 onAuthStateChanged(auth, user => {
   if (user) showPage("dashboard");
-  else showPage("home");
 });
 
+/* 페이지 이동 */
+gotoLogin.onclick = () => showPage("loginPage");
+gotoSignup.onclick = () => showPage("signupPage");
+
 /* 로그아웃 */
-document.getElementById("logoutBtn").onclick = async () => {
+logoutBtn.onclick = async () => {
   await signOut(auth);
-  document.body.classList.remove("sidebar-open");
+  showPage("home");
 };
 
-/* 삼선 메뉴 */
-document.getElementById("menuBtn").onclick = () => {
+/* 사이드바 */
+menuBtn.onclick = () =>
   document.body.classList.toggle("sidebar-open");
-};
 
-/* 사이드바 닫기 */
-document.getElementById("closeSidebarBtn").onclick = () => {
+closeSidebarBtn.onclick = () =>
   document.body.classList.remove("sidebar-open");
-};
 
-/* 질문 응답 등록 */
-document.getElementById("addQAButton").onclick = () => {
-  alert("다음 단계에서 질문/응답 등록 화면을 만들 예정입니다!");
-};
-// 질문 응답 등록 화면 이동
-const qnaBtn = document.getElementById("qnaBtn"); // 기존 버튼
-const qnaPage = document.getElementById("qnaPage");
-const dashboardPage = document.getElementById("dashboard");
-const backBtn = document.getElementById("backToDashboardBtn");
+/* 질문 응답 등록 화면 */
+qnaBtn.onclick = () => showPage("qnaPage");
+backToDashboardBtn.onclick = () => showPage("dashboard");
 
-// 질문 응답 등록하기 버튼 클릭
-qnaBtn.onclick = () => {
-  dashboardPage.style.display = "none";
-  qnaPage.style.display = "block";
+/* 임시 저장 버튼 */
+saveQnaBtn.onclick = () => {
+  alert("다음 단계에서 질문/응답 저장 기능이 추가됩니다!");
 };
-
-// 대시보드로 돌아가기
-backBtn.onclick = () => {
-  qnaPage.style.display = "none";
-  dashboardPage.style.display = "block";
-};
-
