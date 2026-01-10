@@ -1,9 +1,8 @@
 /* =========================
-   Firebase 인증 상태 감지
+   Firebase SDK
 ========================= */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
+import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -11,10 +10,16 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 /* =========================
    Firebase 설정
 ========================= */
-
 const firebaseConfig = {
   apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
   authDomain: "reply-service-f3d73.firebaseapp.com",
@@ -26,147 +31,114 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 /* =========================
-   페이지 요소 가져오기
+   페이지 요소
 ========================= */
-
-// 페이지들
-const home = document.getElementById("home");
-const signupPage = document.getElementById("signupPage");
-const loginPage = document.getElementById("loginPage");
-const dashboard = document.getElementById("dashboard");
-const qnaPage = document.getElementById("qnaPage");
-
-// 버튼들
-const menuBtn = document.getElementById("menuBtn");
-
-/* =========================
-   페이지 관리 객체
-========================= */
-
 const pages = {
-  home: home,
-  signup: signupPage,
-  login: loginPage,
-  dashboard: dashboard,
-  qna: qnaPage
+  home: document.getElementById("home"),
+  login: document.getElementById("loginPage"),
+  signup: document.getElementById("signupPage"),
+  dashboard: document.getElementById("dashboard"),
+  qna: document.getElementById("qnaPage")
 };
 
-/* =========================
-   화면 전환 함수 (핵심)
-========================= */
-
-function showPage(pageName) {
-  Object.values(pages).forEach(page => {
-    page.classList.remove("active");
-  });
-
-  pages[pageName].classList.add("active");
-
-  // 사이드바 닫기
+function showPage(name) {
+  Object.values(pages).forEach(p => p.classList.remove("active"));
+  pages[name].classList.add("active");
   document.body.classList.remove("sidebar-open");
 }
 
 /* =========================
-   ⭐ 로그인 상태 감지 (핵심 추가)
+   로그인 상태 감지
 ========================= */
-
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // 로그인 상태
     showPage("dashboard");
   } else {
-    // 로그아웃 상태
     showPage("home");
   }
 });
 
 /* =========================
-   홈 → 로그인 / 회원가입
+   화면 이동
 ========================= */
-
-window.goLogin = function () {
-  showPage("login");
-};
-
-window.goSignup = function () {
-  showPage("signup");
-};
+window.goLogin = () => showPage("login");
+window.goSignup = () => showPage("signup");
+window.openQna = () => showPage("qna");
+window.backToDashboard = () => showPage("dashboard");
 
 /* =========================
    회원가입
 ========================= */
+window.signup = async () => {
+  const email = document.querySelector("#signupPage input[type='text'], #signupPage input[type='email']").value;
+  const password = document.querySelector("#signupPage input[type='password']").value;
 
-window.signup = async function () {
-  const email = signupPage.querySelector("input[type='text'], input[type='email']").value;
-  const password = signupPage.querySelector("input[type='password']").value;
-
-  if (!email || !password) {
-    alert("이메일과 비밀번호를 입력하세요");
-    return;
-  }
-
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    alert("회원가입 성공!");
-    showPage("dashboard");
-  } catch (error) {
-    alert(error.message);
-  }
+  await createUserWithEmailAndPassword(auth, email, password);
 };
 
 /* =========================
    로그인
 ========================= */
+window.login = async () => {
+  const email = document.querySelector("#loginPage input[type='text'], #loginPage input[type='email']").value;
+  const password = document.querySelector("#loginPage input[type='password']").value;
 
-window.login = async function () {
-  const email = loginPage.querySelector("input[type='text'], input[type='email']").value;
-  const password = loginPage.querySelector("input[type='password']").value;
-
-  if (!email || !password) {
-    alert("이메일과 비밀번호를 입력하세요");
-    return;
-  }
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("로그인 성공!");
-    showPage("dashboard");
-  } catch (error) {
-    alert("로그인 실패: " + error.message);
-  }
+  await signInWithEmailAndPassword(auth, email, password);
 };
 
 /* =========================
    로그아웃
 ========================= */
-
-window.logout = async function () {
+window.logout = async () => {
   await signOut(auth);
-  showPage("home");
 };
 
 /* =========================
-   삼선 메뉴
+   질문 · 응답 저장 🔥 핵심
 ========================= */
+window.saveQna = async () => {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("로그인이 필요합니다");
+    return;
+  }
 
-window.toggleSidebar = function () {
+  const question = document.querySelector("#qnaPage input").value;
+  const answer = document.querySelector("#qnaPage textarea").value;
+
+  const usageType = document.querySelector(".usage-select button.active")?.innerText || "웹사이트";
+  const appType = document.querySelector("#qnaPage select").value;
+
+  if (!question || !answer) {
+    alert("질문과 답변을 입력하세요");
+    return;
+  }
+
+  await addDoc(
+    collection(db, "users", user.uid, "qna"),
+    {
+      question,
+      answer,
+      usageType,
+      appType,
+      createdAt: serverTimestamp()
+    }
+  );
+
+  alert("저장 완료!");
+  showPage("dashboard");
+};
+
+/* =========================
+   사이드바
+========================= */
+window.toggleSidebar = () => {
   document.body.classList.toggle("sidebar-open");
 };
 
-window.closeSidebar = function () {
+window.closeSidebar = () => {
   document.body.classList.remove("sidebar-open");
-};
-
-/* =========================
-   질문 · 응답 등록 화면
-========================= */
-
-window.openQna = function () {
-  showPage("qna");
-};
-
-window.backToDashboard = function () {
-  showPage("dashboard");
 };
