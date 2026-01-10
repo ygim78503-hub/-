@@ -5,121 +5,93 @@
 body {
   margin: 0;
   font-family: 'Noto Sans KR', system-ui, sans-serif;
-  background-color: #F7F6FF;
+  background: #F7F6FF;
   color: #333;
 }
 
-/* 페이지 */
 .page {
   display: none;
-  padding: 24px;
   max-width: 420px;
   margin: 0 auto;
+  padding: 20px;
 }
 
-/* 버튼 */
+#home {
+  display: block;
+  text-align: center;
+  padding-top: 100px;
+}
+
 button {
   padding: 12px 18px;
   border-radius: 12px;
   border: none;
-  background: #6C63FF;
-  color: #fff;
   font-weight: 600;
   cursor: pointer;
+  background: #6C63FF;
+  color: white;
 }
 
-button.secondary {
-  background: #EDEBFF;
+button:active {
+  transform: scale(0.97);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+#menuBtn,
+#backToDashboard {
+  background: none;
   color: #6C63FF;
+  font-size: 20px;
 }
 
-button:hover {
-  opacity: 0.9;
+.service-name {
+  font-weight: 700;
 }
 
-/* 입력 */
-input, textarea {
+.card.center {
+  margin-top: 80px;
+  text-align: center;
+}
+
+textarea {
   width: 100%;
+  min-height: 120px;
   padding: 14px;
   border-radius: 12px;
   border: 1px solid #ddd;
   font-size: 14px;
-  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: none;
 }
 
-/* 헤더 */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-}
-
-#menuBtn {
-  font-size: 24px;
-  background: none;
-  color: #6C63FF;
-}
-
-/* 사이드바 */
-#sidebar {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 260px;
-  height: 100%;
-  background: #6C63FF;
-  color: #fff;
-  padding-top: 80px;
-  transition: left 0.3s ease;
-  z-index: 1000;
-}
-
-body.sidebar-open #sidebar {
-  left: 0;
-}
-
-#sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-#sidebar li {
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-}
-
-/* 카드 */
-.card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  margin-top: 20px;
-  box-shadow: 0 10px 30px rgba(108,99,255,0.15);
-}
-
-/* 폼 */
-.form-group {
-  margin-top: 20px;
-}
-
-.toggle-group {
+.select-box {
   display: flex;
   gap: 10px;
+  margin-bottom: 14px;
 }
 
-.toggle-btn {
+.select-box button {
   flex: 1;
   background: #EDEBFF;
   color: #6C63FF;
 }
 
-.toggle-btn.active {
+.select-box button.active {
   background: #6C63FF;
-  color: #fff;
+  color: white;
+}
+
+#appSelectArea {
+  display: none;
+  margin-bottom: 20px;
 }
 
 .app-buttons {
@@ -135,25 +107,10 @@ body.sidebar-open #sidebar {
 
 .app-btn.active {
   background: #6C63FF;
-  color: #fff;
+  color: white;
 }
 
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-/* 푸터 */
-footer {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.social-btn {
-  background: #EDEBFF;
-  color: #6C63FF;
-  border-radius: 20px;
+.save {
+  width: 100%;
+  margin-top: 10px;
 }
