@@ -2,135 +2,134 @@
    페이지 요소 가져오기
 ========================= */
 
-// 페이지들
-const home = document.getElementById("home");
-const signupPage = document.getElementById("signupPage");
-const loginPage = document.getElementById("loginPage");
-const dashboard = document.getElementById("dashboard");
-const qnaPage = document.getElementById("qnaPage");
+document.addEventListener("DOMContentLoaded", () => {
 
-// 버튼들
-const startBtn = document.getElementById("startBtn");
-const gotoLogin = document.getElementById("gotoLogin");
-const gotoSignup = document.getElementById("gotoSignup");
-const signupSubmitBtn = document.getElementById("signupSubmitBtn");
-const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+  // 페이지들
+  const home = document.getElementById("home");
+  const signupPage = document.getElementById("signupPage");
+  const loginPage = document.getElementById("loginPage");
+  const dashboard = document.getElementById("dashboard");
+  const qnaPage = document.getElementById("qnaPage");
 
-const menuBtn = document.getElementById("menuBtn");
-const closeSidebar = document.getElementById("closeSidebar");
-const logoutBtn = document.getElementById("logoutBtn");
+  // 버튼들
+  const startBtn = document.getElementById("startBtn");
+  const gotoLogin = document.getElementById("gotoLogin");
+  const gotoSignup = document.getElementById("gotoSignup");
+  const signupSubmitBtn = document.getElementById("signupSubmitBtn");
+  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 
-const goQna = document.getElementById("goQna");
-const backBtn = document.getElementById("backBtn");
+  const menuBtn = document.getElementById("menuBtn");
+  const closeSidebar = document.getElementById("closeSidebar");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-/* =========================
-   페이지 관리 객체
-========================= */
+  const goQna = document.getElementById("goQna");
+  const backBtn = document.getElementById("backBtn");
 
-const pages = {
-  home: home,
-  signup: signupPage,
-  login: loginPage,
-  dashboard: dashboard,
-  qna: qnaPage
-};
+  /* =========================
+     페이지 관리 객체
+  ========================= */
 
-/* =========================
-   화면 전환 함수 (핵심)
-========================= */
+  const pages = {
+    home: home,
+    signup: signupPage,
+    login: loginPage,
+    dashboard: dashboard,
+    qna: qnaPage
+  };
 
-function showPage(pageName) {
-  // 모든 페이지 숨김
-  Object.values(pages).forEach(page => {
-    page.classList.remove("active");
+  /* =========================
+     화면 전환 함수 (핵심)
+  ========================= */
+
+  function showPage(pageName) {
+    // 모든 페이지 숨김
+    Object.values(pages).forEach(page => {
+      page.classList.remove("active");
+    });
+
+    // 선택한 페이지만 표시
+    pages[pageName].classList.add("active");
+
+    // 사이드바는 항상 닫음
+    document.body.classList.remove("sidebar-open");
+  }
+
+  /* =========================
+     🔥 초기 화면 강제 설정
+  ========================= */
+
+  showPage("home");
+
+  /* =========================
+     홈 → 회원가입
+  ========================= */
+
+  startBtn.addEventListener("click", () => {
+    showPage("signup");
   });
 
-  // 선택한 페이지만 표시
-  pages[pageName].classList.add("active");
+  /* =========================
+     회원가입 / 로그인 이동
+  ========================= */
 
-  // 사이드바는 항상 닫음
-  document.body.classList.remove("sidebar-open");
-}
+  gotoLogin.addEventListener("click", () => {
+    showPage("login");
+  });
 
-/* =========================
-   초기 화면
-========================= */
+  gotoSignup.addEventListener("click", () => {
+    showPage("signup");
+  });
 
-showPage("home");
+  /* =========================
+     회원가입 처리 (임시)
+  ========================= */
 
-/* =========================
-   홈 → 회원가입
-========================= */
+  signupSubmitBtn.addEventListener("click", () => {
+    showPage("login");
+  });
 
-startBtn.addEventListener("click", () => {
-  showPage("signup");
-});
+  /* =========================
+     로그인 처리 (임시)
+  ========================= */
 
-/* =========================
-   회원가입 / 로그인 이동
-========================= */
+  loginSubmitBtn.addEventListener("click", () => {
+    showPage("dashboard");
+  });
 
-gotoLogin.addEventListener("click", () => {
-  showPage("login");
-});
+  /* =========================
+     삼선 메뉴 열기 / 닫기
+  ========================= */
 
-gotoSignup.addEventListener("click", () => {
-  showPage("signup");
-});
+  menuBtn.addEventListener("click", () => {
+    document.body.classList.toggle("sidebar-open");
+  });
 
-/* =========================
-   회원가입 처리 (임시)
-   ⚠ 나중에 Firebase 연결
-========================= */
+  closeSidebar.addEventListener("click", () => {
+    document.body.classList.remove("sidebar-open");
+  });
 
-signupSubmitBtn.addEventListener("click", () => {
-  // 여기 나중에 Firebase createUserWithEmailAndPassword
-  showPage("login");
-});
+  /* =========================
+     로그아웃
+  ========================= */
 
-/* =========================
-   로그인 처리 (임시)
-   ⚠ 나중에 Firebase signIn
-========================= */
+  logoutBtn.addEventListener("click", () => {
+    showPage("home");
+  });
 
-loginSubmitBtn.addEventListener("click", () => {
-  // 여기 나중에 Firebase 로그인 성공 시
-  showPage("dashboard");
-});
+  /* =========================
+     질문 · 응답 등록 화면 이동
+  ========================= */
 
-/* =========================
-   삼선 메뉴 열기 / 닫기
-========================= */
+  goQna.addEventListener("click", () => {
+    showPage("qna");
+  });
 
-menuBtn.addEventListener("click", () => {
-  document.body.classList.toggle("sidebar-open");
-});
+  /* =========================
+     질문 등록 → 대시보드 복귀
+  ========================= */
 
-closeSidebar.addEventListener("click", () => {
-  document.body.classList.remove("sidebar-open");
-});
+  backBtn.addEventListener("click", () => {
+    showPage("dashboard");
+  });
 
-/* =========================
-   로그아웃
-========================= */
-
-logoutBtn.addEventListener("click", () => {
-  // 나중에 Firebase signOut()
-  showPage("home");
-});
-
-/* =========================
-   질문 · 응답 등록 화면 이동
-========================= */
-
-goQna.addEventListener("click", () => {
-  showPage("qna");
-});
-
-/* =========================
-   질문 등록 → 대시보드 복귀
-========================= */
-
-backBtn.addEventListener("click", () => {
-  showPage("dashboard");
 });
