@@ -1,80 +1,101 @@
-// ===== 페이지 관리 =====
-const pages = {
-  home: document.getElementById("home"),
-  signup: document.getElementById("signupPage"),
-  login: document.getElementById("loginPage"),
-  dashboard: document.getElementById("dashboard"),
-  qna: document.getElementById("qnaPage")
-};
+/********************************
+ 기본 페이지 상태
+********************************/
+document.addEventListener("DOMContentLoaded", () => {
+  const dashboardPage = document.getElementById("dashboard");
+  const qnaPage = document.getElementById("qnaPage");
 
-function showPage(name) {
-  Object.values(pages).forEach(p => p.style.display = "none");
-  pages[name].style.display = "block";
-  document.body.classList.remove("sidebar-open");
-}
-
-// 초기 화면
-showPage("home");
-
-// ===== 버튼 =====
-document.getElementById("startBtn").onclick = () => showPage("signup");
-document.getElementById("gotoLogin").onclick = () => showPage("login");
-document.getElementById("gotoSignup").onclick = () => showPage("signup");
-document.getElementById("loginSubmitBtn").onclick = () => showPage("dashboard");
-document.getElementById("signupSubmitBtn").onclick = () => showPage("login");
-
-// ===== 사이드바 =====
-const menuBtn = document.getElementById("menuBtn");
-const closeDashboardBtn = document.getElementById("closeDashboardBtn");
-
-menuBtn.onclick = () => {
-  document.body.classList.toggle("sidebar-open");
-};
-
-closeDashboardBtn.onclick = () => {
-  document.body.classList.remove("sidebar-open");
-};
-
-document.getElementById("logoutBtn").onclick = () => {
-  showPage("home");
-};
-
-// ===== 질문 등록 페이지 이동 =====
-document.getElementById("openQnaPage").onclick = () => {
-  showPage("qna");
-};
-
-document.getElementById("backToDashboard").onclick = () => {
-  showPage("dashboard");
-};
-
-// ===== 웹 / 앱 선택 =====
-const selectWeb = document.getElementById("selectWeb");
-const selectApp = document.getElementById("selectApp");
-const appSelectBox = document.getElementById("appSelectBox");
-
-selectWeb.onclick = () => {
-  selectWeb.classList.add("active");
-  selectApp.classList.remove("active");
-  appSelectBox.style.display = "none";
-};
-
-selectApp.onclick = () => {
-  selectApp.classList.add("active");
-  selectWeb.classList.remove("active");
-  appSelectBox.style.display = "block";
-};
-
-// ===== 앱 버튼 선택 =====
-document.querySelectorAll(".app-btn").forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll(".app-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  };
+  if (dashboardPage) dashboardPage.style.display = "block";
+  if (qnaPage) qnaPage.style.display = "none";
 });
 
-// ===== 저장 (현재는 UI만) =====
-document.getElementById("saveQna").onclick = () => {
-  alert("질문 / 응답이 저장되었습니다 (다음 단계에서 DB 연동)");
-  showPage("dashboard");
-};
+
+/********************************
+ 질문·응답 등록 화면 이동
+********************************/
+const openQnaBtn = document.getElementById("openQnaPage");
+const backToDashboardBtn = document.getElementById("backToDashboard");
+
+const dashboardPage = document.getElementById("dashboard");
+const qnaPage = document.getElementById("qnaPage");
+
+if (openQnaBtn) {
+  openQnaBtn.addEventListener("click", () => {
+    dashboardPage.style.display = "none";
+    qnaPage.style.display = "block";
+  });
+}
+
+if (backToDashboardBtn) {
+  backToDashboardBtn.addEventListener("click", () => {
+    qnaPage.style.display = "none";
+    dashboardPage.style.display = "block";
+  });
+}
+
+
+/********************************
+ 웹 / 앱 선택 버튼
+********************************/
+const webBtn = document.getElementById("selectWeb");
+const appBtn = document.getElementById("selectApp");
+const appSelectArea = document.getElementById("appSelectArea");
+
+if (webBtn && appBtn) {
+  webBtn.addEventListener("click", () => {
+    webBtn.classList.add("active");
+    appBtn.classList.remove("active");
+    if (appSelectArea) appSelectArea.style.display = "none";
+  });
+
+  appBtn.addEventListener("click", () => {
+    appBtn.classList.add("active");
+    webBtn.classList.remove("active");
+    if (appSelectArea) appSelectArea.style.display = "block";
+  });
+}
+
+
+/********************************
+ 앱 종류 선택 (단일 선택)
+********************************/
+const appButtons = document.querySelectorAll(".app-btn");
+
+appButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    appButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+  });
+});
+
+
+/********************************
+ 저장 버튼 (현재는 콘솔 확인용)
+********************************/
+const saveBtn = document.getElementById("saveQna");
+
+if (saveBtn) {
+  saveBtn.addEventListener("click", () => {
+    const question = document.getElementById("questionInput")?.value;
+    const answer = document.getElementById("answerInput")?.value;
+
+    let location = "웹사이트";
+    if (appBtn && appBtn.classList.contains("active")) {
+      location = "앱";
+    }
+
+    let selectedApp = null;
+    appButtons.forEach(btn => {
+      if (btn.classList.contains("active")) {
+        selectedApp = btn.dataset.app;
+      }
+    });
+
+    console.log("질문:", question);
+    console.log("응답:", answer);
+    console.log("사용 위치:", location);
+    console.log("앱 종류:", selectedApp);
+
+    alert("질문/응답이 저장되었습니다 (임시)");
+  });
+}
