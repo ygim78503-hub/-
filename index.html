@@ -2,86 +2,60 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>자동응답 시스템</title>
+  <title>질문 · 응답 등록</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- 홈 -->
-<div id="home" class="page active">
-  <h1>반복 질문,<br>이제 자동으로 응답하세요</h1>
-  <p>고객 문의를 자동으로 처리하는 개인 AI 비서</p>
-  <button id="startBtn">자동응답 시스템 무료로 7일 사용해보기</button>
-</div>
-
-<!-- 회원가입 -->
-<div id="signupPage" class="page">
-  <h2>회원가입</h2>
-  <input id="signupEmail" type="email" placeholder="이메일" />
-  <input id="signupPassword" type="password" placeholder="비밀번호" />
-  <button id="signupSubmitBtn">회원가입</button>
-  <button class="secondary" id="gotoLogin">로그인</button>
-</div>
-
-<!-- 로그인 -->
-<div id="loginPage" class="page">
-  <h2>로그인</h2>
-  <input id="loginEmail" type="email" placeholder="이메일" />
-  <input id="loginPassword" type="password" placeholder="비밀번호" />
-  <button id="loginSubmitBtn">로그인</button>
-  <button class="secondary" id="gotoSignup">회원가입</button>
-</div>
-
-<!-- 대시보드 -->
-<div id="dashboard" class="page">
-
-  <header>
-    <button id="menuBtn">☰</button>
-    <span class="service-name">자동응답 시스템</span>
+  <!-- 상단 바 -->
+  <header class="sub-header">
+    <button onclick="goBack()" class="back-btn">←</button>
+    <h2>질문 · 응답 등록</h2>
   </header>
 
-  <nav id="sidebar">
-    <ul>
-      <li>개인정보</li>
-      <li>설정</li>
-      <li id="logoutBtn">로그아웃</li>
-      <li id="closeSidebar">대시보드 닫기</li>
-    </ul>
-  </nav>
+  <main class="qna-container">
 
-  <main>
-    <h2>환영합니다 👋</h2>
-    <p>자동응답을 설정해보세요</p>
+    <!-- 질문 -->
+    <label>질문</label>
+    <textarea
+      id="questionInput"
+      placeholder="예: 배송은 얼마나 걸리나요?"
+      rows="4"
+    ></textarea>
 
-    <div class="card">
-      <h3>질문 · 응답 자동화</h3>
-      <p>자주 묻는 질문을 등록하면 자동으로 응답합니다.</p>
-      <button id="goQna">질문 · 응답 등록하기</button>
+    <!-- 응답 -->
+    <label>응답</label>
+    <textarea
+      id="answerInput"
+      placeholder="자동으로 보낼 답변을 입력하세요"
+      rows="4"
+    ></textarea>
+
+    <!-- 사용 위치 -->
+    <label>사용 위치</label>
+    <div class="select-group">
+      <button class="toggle-btn active" id="siteBtn">웹사이트</button>
+      <button class="toggle-btn" id="appBtn">앱</button>
     </div>
+
+    <!-- 앱 선택 (앱 선택 시 표시되는 영역) -->
+    <div id="appSelectArea" class="app-select">
+      <label>앱 종류</label>
+      <select id="appType">
+        <option value="">선택</option>
+        <option>인스타그램</option>
+        <option>카카오톡</option>
+        <option>문자</option>
+        <option>WhatsApp</option>
+        <option>디스코드</option>
+      </select>
+    </div>
+
+    <!-- 저장 -->
+    <button class="primary-btn" onclick="saveQna()">저장하기</button>
+
   </main>
 
-  <footer>
-    <button class="social-btn">YouTube</button>
-    <button class="social-btn">Instagram</button>
-  </footer>
-</div>
-
-<!-- 질문 응답 등록 -->
-<div id="qnaPage" class="page">
-  <header>
-    <button id="backBtn">←</button>
-    <span class="service-name">질문 · 응답 등록</span>
-  </header>
-
-  <main>
-    <div class="card">
-      <textarea placeholder="질문을 입력하세요"></textarea>
-      <textarea placeholder="자동 응답 내용을 입력하세요"></textarea>
-      <button>저장하기</button>
-    </div>
-  </main>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
