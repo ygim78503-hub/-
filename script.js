@@ -138,3 +138,51 @@ saveQnaBtn.onclick = () => {
   // 👉 다음 단계: Firestore에 저장
 };
 
+/* ===== 질문 응답 등록 UI 로직 ===== */
+
+let selectedType = null;
+
+const typeWeb = document.getElementById("typeWeb");
+const typeApp = document.getElementById("typeApp");
+const appSelectBox = document.getElementById("appSelectBox");
+const appType = document.getElementById("appType");
+
+typeWeb.onclick = () => {
+  selectedType = "web";
+  appSelectBox.style.display = "none";
+  typeWeb.classList.remove("secondary");
+  typeApp.classList.add("secondary");
+};
+
+typeApp.onclick = () => {
+  selectedType = "app";
+  appSelectBox.style.display = "block";
+  typeApp.classList.remove("secondary");
+  typeWeb.classList.add("secondary");
+};
+
+saveQnaBtn.onclick = () => {
+  const question = questionInput.value.trim();
+  const answer = answerInput.value.trim();
+
+  if (!question || !answer) {
+    alert("질문과 답변을 입력하세요");
+    return;
+  }
+
+  if (!selectedType) {
+    alert("사용 위치를 선택하세요");
+    return;
+  }
+
+  if (selectedType === "app" && !appType.value) {
+    alert("앱 종류를 선택하세요");
+    return;
+  }
+
+  alert(
+    `저장 준비 완료!\n\n질문: ${question}\n답변: ${answer}\n유형: ${selectedType}\n앱: ${appType.value || "-"}`
+  );
+
+  // 👉 다음 단계: Firestore에 저장
+};
