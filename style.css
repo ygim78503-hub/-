@@ -119,7 +119,7 @@ footer {
   }
 }
 
-ㅍ/* 초기에는 질문·응답 등록 화면 숨김 */
+/* 초기에는 질문·응답 등록 화면 숨김 */
 .qna-container {
   display: none;
 }
