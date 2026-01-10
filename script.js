@@ -1,141 +1,172 @@
 /* =========================
-   페이지 요소
+   Firebase 인증 상태 감지
 ========================= */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+/* =========================
+   Firebase 설정
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD6y7KMQ9T9LbvectgYOldxYAmq-_Zrjgs",
+  authDomain: "reply-service-f3d73.firebaseapp.com",
+  projectId: "reply-service-f3d73",
+  storageBucket: "reply-service-f3d73.firebasestorage.app",
+  messagingSenderId: "583700899332",
+  appId: "1:583700899332:web:6e9064ccf93f676dd03751"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* =========================
+   페이지 요소 가져오기
+========================= */
+
+// 페이지들
 const home = document.getElementById("home");
-const loginPage = document.getElementById("loginPage");
 const signupPage = document.getElementById("signupPage");
+const loginPage = document.getElementById("loginPage");
 const dashboard = document.getElementById("dashboard");
 const qnaPage = document.getElementById("qnaPage");
 
+// 버튼들
+const menuBtn = document.getElementById("menuBtn");
+
 /* =========================
-   페이지 관리
+   페이지 관리 객체
 ========================= */
+
 const pages = {
-  home,
-  login: loginPage,
+  home: home,
   signup: signupPage,
-  dashboard,
+  login: loginPage,
+  dashboard: dashboard,
   qna: qnaPage
 };
 
-function showPage(name) {
-  Object.values(pages).forEach(p => p.classList.remove("active"));
-  pages[name].classList.add("active");
+/* =========================
+   화면 전환 함수 (핵심)
+========================= */
+
+function showPage(pageName) {
+  Object.values(pages).forEach(page => {
+    page.classList.remove("active");
+  });
+
+  pages[pageName].classList.add("active");
+
+  // 사이드바 닫기
   document.body.classList.remove("sidebar-open");
 }
 
 /* =========================
-   초기 화면
+   ⭐ 로그인 상태 감지 (핵심 추가)
 ========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  showPage("home");
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // 로그인 상태
+    showPage("dashboard");
+  } else {
+    // 로그아웃 상태
+    showPage("home");
+  }
 });
 
 /* =========================
-   홈 / 로그인 / 회원가입
+   홈 → 로그인 / 회원가입
 ========================= */
-window.goLogin = () => showPage("login");
-window.goSignup = () => showPage("signup");
 
-window.login = () => {
-  showPage("dashboard");
-};
-
-window.signup = () => {
+window.goLogin = function () {
   showPage("login");
 };
 
+window.goSignup = function () {
+  showPage("signup");
+};
+
 /* =========================
-   사이드바
+   회원가입
 ========================= */
-window.toggleSidebar = () => {
-  document.body.classList.toggle("sidebar-open");
+
+window.signup = async function () {
+  const email = signupPage.querySelector("input[type='text'], input[type='email']").value;
+  const password = signupPage.querySelector("input[type='password']").value;
+
+  if (!email || !password) {
+    alert("이메일과 비밀번호를 입력하세요");
+    return;
+  }
+
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    alert("회원가입 성공!");
+    showPage("dashboard");
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
-window.closeSidebar = () => {
-  document.body.classList.remove("sidebar-open");
+/* =========================
+   로그인
+========================= */
+
+window.login = async function () {
+  const email = loginPage.querySelector("input[type='text'], input[type='email']").value;
+  const password = loginPage.querySelector("input[type='password']").value;
+
+  if (!email || !password) {
+    alert("이메일과 비밀번호를 입력하세요");
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("로그인 성공!");
+    showPage("dashboard");
+  } catch (error) {
+    alert("로그인 실패: " + error.message);
+  }
 };
 
-window.logout = () => {
+/* =========================
+   로그아웃
+========================= */
+
+window.logout = async function () {
+  await signOut(auth);
   showPage("home");
 };
 
 /* =========================
-   질문 응답 화면 이동
+   삼선 메뉴
 ========================= */
-window.openQna = () => {
+
+window.toggleSidebar = function () {
+  document.body.classList.toggle("sidebar-open");
+};
+
+window.closeSidebar = function () {
+  document.body.classList.remove("sidebar-open");
+};
+
+/* =========================
+   질문 · 응답 등록 화면
+========================= */
+
+window.openQna = function () {
   showPage("qna");
 };
 
-window.backToDashboard = () => {
+window.backToDashboard = function () {
   showPage("dashboard");
 };
-
-/* =========================
-   Firebase
-========================= */
-const auth = firebase.auth();
-const db = firebase.firestore();
-let currentUser = null;
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    currentUser = user;
-    loadMyQna();
-  } else {
-    currentUser = null;
-  }
-});
-
-/* =========================
-   질문 · 응답 저장
-========================= */
-window.saveQna = async () => {
-  if (!currentUser) {
-    alert("로그인이 필요합니다");
-    return;
-  }
-
-  const question = qnaPage.querySelector("input").value.trim();
-  const answer = qnaPage.querySelector("textarea").value.trim();
-
-  if (!question || !answer) {
-    alert("질문과 답변을 입력하세요");
-    return;
-  }
-
-  await db
-    .collection("users")
-    .doc(currentUser.uid)
-    .collection("qna")
-    .add({
-      question,
-      answer,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-  alert("저장 완료");
-
-  qnaPage.querySelector("input").value = "";
-  qnaPage.querySelector("textarea").value = "";
-};
-
-/* =========================
-   저장된 질문 불러오기
-========================= */
-async function loadMyQna() {
-  if (!currentUser) return;
-
-  const snapshot = await db
-    .collection("users")
-    .doc(currentUser.uid)
-    .collection("qna")
-    .orderBy("createdAt", "desc")
-    .get();
-
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    console.log("질문:", data.question);
-    console.log("답변:", data.answer);
-  });
-}
