@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>자동응답 시스템</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -10,11 +11,11 @@
 <!-- =====================
   홈 화면
 ===================== -->
-<section id="home" class="page">
+<section id="home" class="page active">
   <h1>자동응답 시스템</h1>
   <p>자동응답 시스템 무료로 7일 사용해보기</p>
-  <button id="gotoLogin">로그인</button>
-  <button id="gotoSignup" class="secondary">회원가입</button>
+  <button onclick="goLogin()">로그인</button>
+  <button class="secondary" onclick="goSignup()">회원가입</button>
 </section>
 
 <!-- =====================
@@ -22,9 +23,9 @@
 ===================== -->
 <section id="loginPage" class="page">
   <h2>로그인</h2>
-  <input placeholder="이메일" />
+  <input type="email" placeholder="이메일" />
   <input type="password" placeholder="비밀번호" />
-  <button id="loginSubmitBtn">로그인</button>
+  <button onclick="login()">로그인</button>
 </section>
 
 <!-- =====================
@@ -32,9 +33,9 @@
 ===================== -->
 <section id="signupPage" class="page">
   <h2>회원가입</h2>
-  <input placeholder="이메일" />
+  <input type="email" placeholder="이메일" />
   <input type="password" placeholder="비밀번호" />
-  <button id="signupSubmitBtn">회원가입</button>
+  <button onclick="signup()">회원가입</button>
 </section>
 
 <!-- =====================
@@ -43,7 +44,7 @@
 <section id="dashboard" class="page">
 
   <header>
-    <button id="menuBtn">☰</button>
+    <button id="menuBtn" onclick="toggleSidebar()">☰</button>
     <div class="service-name">자동응답 시스템</div>
   </header>
 
@@ -51,8 +52,8 @@
     <ul>
       <li>개인정보</li>
       <li>설정</li>
-      <li id="logoutBtn">로그아웃</li>
-      <li id="closeSidebar">대시보드 닫기</li>
+      <li onclick="logout()">로그아웃</li>
+      <li onclick="closeSidebar()">닫기</li>
     </ul>
   </nav>
 
@@ -63,7 +64,7 @@
     <div class="card">
       <h3>질문 · 응답 자동화</h3>
       <p>자주 묻는 질문을 등록하면 자동으로 응답합니다.</p>
-      <button id="goQna">질문 응답 등록하기</button>
+      <button onclick="openQna()">질문 응답 등록하기</button>
     </div>
 
     <footer>
@@ -81,7 +82,7 @@
   <div class="qna-container">
 
     <div class="qna-header">
-      <button id="backBtn">←</button>
+      <button onclick="backToDashboard()">←</button>
       <span>질문 · 응답 등록</span>
     </div>
 
@@ -109,6 +110,8 @@
   </div>
 </section>
 
-<script src="script.js"></script>
+<!-- 🔥 중요: Firebase import 때문에 반드시 module -->
+<script type="module" src="script.js"></script>
+
 </body>
 </html>
