@@ -1,116 +1,96 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: 'Noto Sans KR', system-ui, sans-serif;
-  background: #F7F6FF;
-  color: #333;
+  font-family: system-ui, sans-serif;
+  background: #f7f6ff;
 }
 
 .page {
   display: none;
+  padding: 24px;
   max-width: 420px;
   margin: 0 auto;
-  padding: 20px;
 }
 
-#home {
+.page.active {
   display: block;
-  text-align: center;
-  padding-top: 100px;
 }
+
+h1 { font-size: 26px; }
+h2 { font-size: 22px; }
 
 button {
-  padding: 12px 18px;
-  border-radius: 12px;
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
   border: none;
-  font-weight: 600;
-  cursor: pointer;
-  background: #6C63FF;
+  border-radius: 10px;
+  background: #6c63ff;
   color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-button:active {
-  transform: scale(0.97);
+button.secondary {
+  background: #edeaff;
+  color: #6c63ff;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
 header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
   padding: 14px;
   background: white;
   border-bottom: 1px solid #eee;
 }
 
-#menuBtn,
-#backToDashboard {
+#menuBtn {
+  font-size: 22px;
   background: none;
-  color: #6C63FF;
-  font-size: 20px;
+  color: #6c63ff;
 }
 
-.service-name {
-  font-weight: 700;
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: #6c63ff;
+  color: white;
+  padding-top: 80px;
+  transition: left 0.3s;
 }
 
-.card.center {
-  margin-top: 80px;
-  text-align: center;
+body.sidebar-open #sidebar {
+  left: 0;
 }
 
-textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  margin-bottom: 16px;
-  resize: none;
+#sidebar li {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
 }
 
-.select-box {
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 20px;
+}
+
+footer {
   display: flex;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 14px;
-}
-
-.select-box button {
-  flex: 1;
-  background: #EDEBFF;
-  color: #6C63FF;
-}
-
-.select-box button.active {
-  background: #6C63FF;
-  color: white;
-}
-
-#appSelectArea {
-  display: none;
-  margin-bottom: 20px;
-}
-
-.app-buttons {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.app-btn {
-  background: #EDEBFF;
-  color: #6C63FF;
-}
-
-.app-btn.active {
-  background: #6C63FF;
-  color: white;
-}
-
-.save {
-  width: 100%;
-  margin-top: 10px;
 }
