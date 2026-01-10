@@ -236,3 +236,86 @@ footer {
 body.sidebar-open {
   overflow: hidden;
 }
+/* =====================
+   질문 · 응답 등록 UI
+===================== */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+textarea {
+  width: 100%;
+  padding: 14px;
+  font-size: 14px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  resize: none;
+  font-family: inherit;
+}
+
+textarea:focus {
+  border-color: #6C63FF;
+  outline: none;
+}
+
+/* 웹 / 앱 선택 버튼 */
+.toggle-group {
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  background-color: #EDEBFF;
+  color: #6C63FF;
+}
+
+.toggle-btn.active {
+  background-color: #6C63FF;
+  color: white;
+}
+
+/* 앱 선택 버튼 */
+.app-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.app-btn {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-weight: 500;
+}
+
+.app-btn.active {
+  border-color: #6C63FF;
+  background-color: #F2F1FF;
+  color: #6C63FF;
+}
+
+/* 하단 버튼 */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  flex: 1;
+}
