@@ -1,4 +1,9 @@
-* { box-sizing: border-box; }
+/* =====================
+   기본 설정
+===================== */
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -6,6 +11,9 @@ body {
   background: #f7f6ff;
 }
 
+/* =====================
+   페이지 공통
+===================== */
 .page {
   display: none;
   padding: 24px;
@@ -17,9 +25,15 @@ body {
   display: block;
 }
 
+/* =====================
+   텍스트
+===================== */
 h1 { font-size: 26px; }
 h2 { font-size: 22px; }
 
+/* =====================
+   버튼
+===================== */
 button {
   width: 100%;
   padding: 14px;
@@ -37,29 +51,46 @@ button.secondary {
   color: #6c63ff;
 }
 
-input, textarea {
+/* =====================
+   입력창
+===================== */
+input,
+textarea {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
+  font-size: 14px;
 }
 
+/* =====================
+   대시보드 헤더
+===================== */
 header {
+  position: relative;          /* ⭐ 핵심 */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 14px;
   background: white;
   border-bottom: 1px solid #eee;
 }
 
+/* 삼선 버튼 - 항상 왼쪽 */
 #menuBtn {
+  position: absolute;          /* ⭐ 핵심 */
+  left: 16px;                  /* ⭐ 핵심 */
   font-size: 22px;
   background: none;
   color: #6c63ff;
+  width: auto;
+  margin: 0;
 }
 
+/* =====================
+   사이드바
+===================== */
 #sidebar {
   position: fixed;
   top: 0;
@@ -70,6 +101,7 @@ header {
   color: white;
   padding-top: 80px;
   transition: left 0.3s;
+  z-index: 1000;
 }
 
 body.sidebar-open #sidebar {
@@ -82,6 +114,9 @@ body.sidebar-open #sidebar {
   cursor: pointer;
 }
 
+/* =====================
+   카드
+===================== */
 .card {
   background: white;
   padding: 20px;
@@ -89,37 +124,35 @@ body.sidebar-open #sidebar {
   margin-top: 20px;
 }
 
+/* =====================
+   푸터
+===================== */
 footer {
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 20px;
 }
 
-/* ============================= */
-/* ⬇️ [추가] 질문·응답 입력 영역 중앙 정렬 & 가로 80% */
-/* ============================= */
+/* =====================
+   질문 · 응답 등록 화면
+===================== */
 
+/* 입력 영역 중앙 + 가로 80% */
 .qna-container {
   width: 80%;
-  max-width: 720px;   /* 화면이 커져도 너무 넓어지지 않게 */
-  margin: 0 auto;     /* 정확한 화면 중앙 정렬 */
+  max-width: 720px;
+  margin: 0 auto;
 }
 
-/* 질문 / 응답 입력창 */
-.qna-container textarea,
-.qna-container input {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* 모바일에서도 안정적으로 보이게 */
+/* 모바일 대응 */
 @media (max-width: 768px) {
   .qna-container {
     width: 90%;
   }
 }
 
-/* 초기에는 질문·응답 등록 화면 숨김 */
-.qna-container {
-  display: none;
-}
+/* ⚠️ 중요
+   ❌ display: none 제거됨
+   페이지 전환은 .page.active 로만 제어
+*/
