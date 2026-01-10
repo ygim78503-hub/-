@@ -109,3 +109,50 @@ saveQna.onclick = () => {
 
   alert("저장 완료 (현재 콘솔 출력)");
 };
+let target = "web";
+let selectedApp = null;
+
+selectWeb.onclick = () => {
+  target = "web";
+  selectWeb.classList.add("active");
+  selectApp.classList.remove("active");
+  appSelectBox.style.display = "none";
+};
+
+selectApp.onclick = () => {
+  target = "app";
+  selectApp.classList.add("active");
+  selectWeb.classList.remove("active");
+  appSelectBox.style.display = "block";
+};
+
+// 앱 버튼 선택
+document.querySelectorAll(".app-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".app-btn")
+      .forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedApp = btn.innerText;
+  };
+});
+
+// 저장
+saveQna.onclick = () => {
+  if (!questionInput.value || !answerInput.value) {
+    alert("질문과 응답을 입력하세요");
+    return;
+  }
+  if (target === "app" && !selectedApp) {
+    alert("앱을 선택하세요");
+    return;
+  }
+
+  console.log({
+    question: questionInput.value,
+    answer: answerInput.value,
+    target,
+    app: selectedApp
+  });
+
+  alert("질문/응답이 저장되었습니다");
+};
