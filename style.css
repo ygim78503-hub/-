@@ -94,3 +94,27 @@ footer {
   justify-content: center;
   gap: 10px;
 }
+
+/* ============================= */
+/* ⬇️ [추가] 질문·응답 입력 영역 중앙 정렬 & 가로 80% */
+/* ============================= */
+
+.qna-container {
+  width: 80%;
+  max-width: 720px;   /* 화면이 커져도 너무 넓어지지 않게 */
+  margin: 0 auto;     /* 정확한 화면 중앙 정렬 */
+}
+
+/* 질문 / 응답 입력창 */
+.qna-container textarea,
+.qna-container input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 모바일에서도 안정적으로 보이게 */
+@media (max-width: 768px) {
+  .qna-container {
+    width: 90%;
+  }
+}
