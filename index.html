@@ -14,18 +14,19 @@
 <section id="home" class="page active">
   <h1>민승이</h1>
   <p> 무료로 7일 사용해보기</p>
-  <button onclick="goLogin()">로그인</button>
-  <button class="secondary" onclick="goSignup()">회원가입</button>
+  <!-- 로그인 버튼 누르면 바로 대시보드로 이동 -->
+  <button onclick="showPage('dashboard')">로그인</button>
+  <button class="secondary" onclick="showPage('signupPage')">회원가입</button>
 </section>
 
 <!-- =====================
-  로그인
+  로그인 (혹시 이 페이지로 올 경우를 대비해 여기도 바로 이동 처리)
 ===================== -->
 <section id="loginPage" class="page">
   <h2>로그인</h2>
   <input type="email" placeholder="이메일" />
   <input type="password" placeholder="비밀번호" />
-  <button onclick="login()">로그인</button>
+  <button onclick="showPage('dashboard')">로그인</button>
 </section>
 
 <!-- =====================
@@ -35,7 +36,7 @@
   <h2>회원가입</h2>
   <input type="email" placeholder="이메일" />
   <input type="password" placeholder="비밀번호" />
-  <button onclick="signup()">회원가입</button>
+  <button onclick="showPage('dashboard')">회원가입</button>
 </section>
 
 <!-- =====================
@@ -52,7 +53,7 @@
     <ul>
       <li>개인정보</li>
       <li>설정</li>
-      <li onclick="logout()">로그아웃</li>
+      <li onclick="showPage('home')">로그아웃</li>
       <li onclick="closeSidebar()">닫기</li>
     </ul>
   </nav>
@@ -64,7 +65,7 @@
     <div class="card">
       <h3>자동화</h3>
       <p> 응답합니다.</p>
-      <button onclick="openQna()">민승이 등록하기</button>
+      <button onclick="showPage('qnaPage')">민승이 등록하기</button>
     </div>
 
     <footer>
@@ -82,7 +83,7 @@
   <div class="qna-container">
 
     <div class="qna-header">
-      <button onclick="backToDashboard()">←</button>
+      <button onclick="showPage('dashboard')">←</button>
       <span>민승이</span>
     </div>
 
@@ -110,7 +111,19 @@
   </div>
 </section>
 
-<!-- 🔥 중요: Firebase import 때문에 반드시 module -->
+<!-- 페이지 전환용 스크립트 추가 -->
+<script>
+  function showPage(pageId) {
+    // 모든 페이지에서 active 클래스 제거
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+    // 선택한 페이지만 active 추가
+    document.getElementById(pageId).classList.add('active');
+  }
+</script>
+
+<!-- 기존 script.js의 사이드바 기능 등을 유지하기 위해 남겨둠 -->
 <script type="module" src="script.js"></script>
 
 </body>
